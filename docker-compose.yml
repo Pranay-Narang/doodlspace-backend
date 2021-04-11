@@ -1,23 +1,39 @@
 version: "3.9"
 
+networks:
+  web:
+    external: true
+  internal:
+    external: false
+
 services:
   app:
     build:
       context: .
-    ports:
-      - "3000:3000"
+    labels:
+      - traefik.http.routers.doodlspace-backend.rule=Host(`test-api.doodlspace.com`)
+      - traefik.http.routers.doodlspace-backend.tls=true
+      - traefik.http.routers.doodlspace-backend.tls.certresolver=lets-encrypt
+      - traefik.port=3000
     environment:
       DB_URL: db
     depends_on:
       - db
+    networks:
+      - internal
+      - web
   
   db:
     image: mongo
     volumes:
       - mongo-data:/data/db
+    labels:
+      - traefik.enable=false
     environment:
       MONGO_INITDB_ROOT_USERNAME:
       MONGO_INITDB_ROOT_PASSWORD:
-
+    networks:
+      - internal
+    
 volumes:
   mongo-data:
