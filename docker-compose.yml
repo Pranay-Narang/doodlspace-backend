@@ -16,12 +16,22 @@ services:
       - traefik.http.routers.doodlspace-backend.tls.certresolver=lets-encrypt
       - traefik.port=3000
     environment:
-      DB_URL: db
+      - DB_URL=db
+      - FIREBASE_ACCOUNT_TYPE
+      - FIREBASE_PROJECT_ID
+      - FIREBASE_PRIVATE_KEY_ID
+      - FIREBASE_PRIVATE_KEY
+      - FIREBASE_CLIENT_EMAIL
+      - FIREBASE_CLIENT_ID
+      - FIREBASE_AUTH_URI
+      - FIREBASE_TOKEN_URI
+      - FIREBASE_AUTH_PROVIDER_x509_CERT_URL
+      - FIREBASE_CLIENT_x509_CERT_URL
     depends_on:
       - db
     networks:
-      - internal
       - web
+      - internal
   
   db:
     image: mongo
