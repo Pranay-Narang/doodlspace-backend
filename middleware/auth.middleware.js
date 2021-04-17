@@ -17,6 +17,10 @@ module.exports = (options) => {
                 .verifyIdToken(req.header('Authorization').replace('Bearer ', ''))
 
             req.uid = decodedToken.uid
+            
+            if(decodedToken.role) {
+                req.role = decodedToken.role
+            }
 
             if (!options) {
                 return next()
