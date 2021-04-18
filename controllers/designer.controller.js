@@ -33,7 +33,7 @@ module.exports.read = read
 const update = async (req, res) => {
     const allowedFields = ["name", "email", "phone"]
     const updates = Object.keys(req.body)
-    const owner = await model.findOne({ uid: req.params.id })
+    const designer = await model.findOne({ uid: req.params.id })
 
     const validOperation = updates.every((elem) => allowedFields.includes(elem))
     if (!validOperation) {
@@ -41,9 +41,9 @@ const update = async (req, res) => {
     }
 
     try {
-        updates.forEach((elem) => owner[elem] = req.body[elem])
-        await owner.save()
-        res.send(owner)
+        updates.forEach((elem) => designer[elem] = req.body[elem])
+        await designer.save()
+        res.send(designer)
     } catch (e) {
         res.status(400).send(e)
     }
@@ -52,10 +52,10 @@ const update = async (req, res) => {
 module.exports.update = update
 
 const remove = async (req, res) => {
-    const owner = await model.findOne({ uid: req.params.id })
+    const designer = await model.findOne({ uid: req.params.id })
     try {
-        await owner.remove()
-        res.send(owner)
+        await designer.remove()
+        res.send(designer)
     } catch (e) {
         res.status(404).send(e)
     }
