@@ -1,0 +1,325 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "Doodlspace API",
+      "description": "API documentation for Doodlspace API services",
+      "contact": {
+        "email": "email@email.com"
+      },
+      "version": "1.0.0-oas3"
+    },
+    "servers": [
+      {
+        "url": "https://test-api.doodlspace.com/services",
+        "description": "Swagger API Auto Mocking"
+      }
+    ],
+    "tags": [
+      {
+        "name": "Designer",
+        "description": "CRUD operations for designer"
+      },
+      {
+        "name": "Owner",
+        "description": "CRUD operation for owner"
+      }
+    ],
+    "paths": {
+      "/designers": {
+        "get": {
+          "tags": [
+            "Designer"
+          ],
+          "summary": "Retrieving all the designers",
+          "responses": {
+            "200": {
+              "description": "Designers",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Designer"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal error"
+            }
+          }
+        },
+        "post": {
+          "tags": [
+            "Designer"
+          ],
+          "summary": "Adding a new designer",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Designer"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "201": {
+              "description": "Created",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Designer"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "User not found"
+            }
+          }
+        }
+      },
+      "/designers/{id}": {
+        "delete": {
+          "tags": [
+            "Designer"
+          ],
+          "summary": "Delete designer",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "Designer that needs to be deleted",
+              "required": true,
+              "style": "simple",
+              "explode": false,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Designer deleted"
+            },
+            "404": {
+              "description": "Designer not found"
+            }
+          }
+        },
+        "patch": {
+          "tags": [
+            "Designer"
+          ],
+          "summary": "Update designer",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "Designer that needs to be updated",
+              "required": true,
+              "style": "simple",
+              "explode": false,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Designer"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "Designer updated"
+            },
+            "400": {
+              "description": "Invalid operation"
+            }
+          }
+        }
+      },
+      "/owners": {
+        "get": {
+          "tags": [
+            "Owner"
+          ],
+          "summary": "Retrieving all the owners",
+          "responses": {
+            "200": {
+              "description": "Owners",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Owner"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal error"
+            }
+          }
+        },
+        "post": {
+          "tags": [
+            "Owner"
+          ],
+          "summary": "Adding a new owner",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Owner"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "201": {
+              "description": "Created",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Owner"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "User not found"
+            }
+          }
+        }
+      },
+      "/owners/{id}": {
+        "delete": {
+          "tags": [
+            "Owner"
+          ],
+          "summary": "Delete owner",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "Owner that needs to be deleted",
+              "required": true,
+              "style": "simple",
+              "explode": false,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Owner deleted"
+            },
+            "404": {
+              "description": "Owner not found"
+            }
+          }
+        },
+        "patch": {
+          "tags": [
+            "Owner"
+          ],
+          "summary": "Update owner",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "Owner that needs to be updated",
+              "required": true,
+              "style": "simple",
+              "explode": false,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Owner"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "Owner updated"
+            },
+            "400": {
+              "description": "Invalid operation"
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "Designer": {
+          "required": [
+            "email",
+            "name",
+            "phone",
+            "uid"
+          ],
+          "type": "object",
+          "properties": {
+            "uid": {
+              "uniqueItems": true,
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "phone": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "email": {
+              "uniqueItems": true,
+              "type": "integer"
+            }
+          }
+        },
+        "Owner": {
+          "required": [
+            "email",
+            "name",
+            "phone",
+            "uid"
+          ],
+          "type": "object",
+          "properties": {
+            "uid": {
+              "uniqueItems": true,
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "phone": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "email": {
+              "uniqueItems": true,
+              "type": "integer"
+            }
+          }
+        }
+      }
+    }
+  }
