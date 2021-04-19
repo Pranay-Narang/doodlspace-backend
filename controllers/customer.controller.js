@@ -23,7 +23,7 @@ const add = async (req, res) => {
 module.exports.add = add
 
 const read = async (req, res) => {
-    const customer = await model.findOne({ uid: req.uid })
+    const customer = await model.find()
     res.send(customer)
 }
 
