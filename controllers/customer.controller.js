@@ -51,7 +51,7 @@ const update = async (req, res) => {
 module.exports.update = update
 
 const remove = async (req, res) => {
-    const customer = await model.findOne({ uid: req.uid })
+    const customer = await model.findOne({ uid: req.params.id })
     try {
         await customer.remove()
         res.send(customer)
