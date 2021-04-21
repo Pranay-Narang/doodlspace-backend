@@ -7,6 +7,8 @@ const cors = require("cors")
 const CONFIG = require('./config/config')
 const routes = require('./routes')
 
+const openapi = require('./openapi/definition.json')
+
 const firebaseServiceAccount = {
     type: CONFIG.FIREBASE_ACCOUNT_TYPE,
     project_id: CONFIG.FIREBASE_PROJECT_ID,
@@ -44,6 +46,10 @@ app.use(cors())
 if (CONFIG.APP_ENV == 'development') {
     app.use(logger('dev'))
 }
+
+app.use('/openapi', async (req, res) => {
+    res.send(openapi)
+})
 
 app.get('/health', async (req, res) => {
     res.status(200).send({
