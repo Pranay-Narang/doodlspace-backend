@@ -44,8 +44,8 @@ module.exports.read = read
 const readOne = async (req, res) => {
     try {
         const brand = await model.findById(req.params.id)
-        const assetURLs = await brand.generatePreSignedURL('assets')
-        brand['assets'] = assetURLs
+        brand['assets'] = await brand.generatePreSignedURL('assets')
+        brand['stockimages'] = await brand.generatePreSignedURL('stockimages')
         res.send(brand)
     } catch (e) {
         res.status(404).send(e)
