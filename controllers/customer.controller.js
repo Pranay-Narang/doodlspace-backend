@@ -14,6 +14,7 @@ const add = async (req, res) => {
         })
 
         await customer.save()
+        await customer.populate('designers').execPopulate()
         res.status(201).send(customer)
     } catch (e) {
         res.status(404).send(e)
@@ -23,16 +24,16 @@ const add = async (req, res) => {
 module.exports.add = add
 
 const read = async (req, res) => {
-    const customer = await model.find()
+    const customer = await model.find().populate('designers')
     res.send(customer)
 }
 
 module.exports.read = read
 
 const update = async (req, res) => {
-    const allowedFields = ["name", "email", "phone"]
+    const allowedFields = ["name", "email", "phone", "designers"]
     const updates = Object.keys(req.body)
-    const customer = await model.findOne({ uid: req.uid })
+    const customer = await model.findOne({ uid: req.params.id })
 
     const validOperation = updates.every((elem) => allowedFields.includes(elem))
     if (!validOperation) {
@@ -42,6 +43,7 @@ const update = async (req, res) => {
     try {
         updates.forEach((elem) => customer[elem] = req.body[elem])
         await customer.save()
+        await customer.populate('designers').execPopulate()
         res.send(customer)
     } catch (e) {
         res.status(400).send(e)

@@ -16,7 +16,7 @@ const schema = new mongoose.Schema({
         required: true,
         unique: true,
         validate(value) {
-            if(!validator.isEmail(value)) throw new Error('Invalid email')
+            if (!validator.isEmail(value)) throw new Error('Invalid email')
         },
         trim: true,
         lowercase: true
@@ -24,8 +24,11 @@ const schema = new mongoose.Schema({
     phone: {
         type: String,
         required: true
-    }
+    },
+    designers: [{ type: String, ref: 'Designer' }],
 }, {
+    toObject: { virtuals: true },
+    toJSON: { virtuals: true },
     timestamps: true
 })
 
