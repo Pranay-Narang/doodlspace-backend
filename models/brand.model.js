@@ -18,6 +18,13 @@ const socialSchema = new mongoose.Schema({
     website: String
 })
 
+const fontSchema = new mongoose.Schema({
+    name: String,
+    family: String,
+    variant: String,
+    URL: String
+})
+
 const schema = new mongoose.Schema(
     {
         cid: {
@@ -32,7 +39,8 @@ const schema = new mongoose.Schema(
         colors: Array,
         social: socialSchema,
         assets: Array,
-        stockimages: Array
+        stockimages: Array,
+        fonts: [fontSchema]
     }
 )
 
