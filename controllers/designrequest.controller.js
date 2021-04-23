@@ -40,10 +40,8 @@ module.exports.add = add
 const read = async (req, res) => {
     if (req.role == 'customer') {
         const dr = await model.find({ cid: req.uid })
-        await dr.populate('brand')
+            .populate('brand')
             .populate('designer')
-            .execPopoulate()
-
         return res.send(dr)
     }
 
@@ -53,3 +51,25 @@ const read = async (req, res) => {
 }
 
 module.exports.read = read
+
+const readOne = async (req, res) => {
+    if (req.role == 'customer') {
+        const dr = await model.findOne({
+            cid: req.uid,
+            _id: req.params.id
+        })
+            .populate('brand')
+            .populate('designer')
+
+        dr['assets'] = await preSigner(dr, 'assets')
+        dr['stockimages'] = await preSigner(dr, 'stockimages')
+        return res.send(dr)
+    }
+
+    const globalDr = await model.findOne({ _id: req.params.id })
+        .populate('brand')
+        .populate('designer')
+    res.send(globalDr)
+}
+
+module.exports.readOne = readOne

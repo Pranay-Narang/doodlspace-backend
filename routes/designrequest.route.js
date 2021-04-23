@@ -43,5 +43,6 @@ router.post('/designrequests', auth({ hasRole: ['customer'] }), upload.fields([
     { name: 'stockimages', maxCount: 10 }
 ]), controller.add)
 router.get('/designrequests', auth({ hasRole: ['customer', 'owner'] }), controller.read)
+router.get('/designrequests/:id', auth({hasRole: ['customer', 'owner']}), controller.readOne)
 
 module.exports = router

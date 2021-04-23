@@ -26,7 +26,9 @@ const schema = new mongoose.Schema({
     designer: {
         type: String,
         ref: 'Designer'
-    }
+    },
+    assets: Array,
+    stockimages: Array
 }, {
     toObject: { virtuals: true },
     toJSON: { virtuals: true },
