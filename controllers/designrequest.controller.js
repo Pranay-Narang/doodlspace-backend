@@ -1,12 +1,25 @@
-const { default: validator } = require('validator');
+const validator = require('validator');
 const CONFIG = require('../config/config');
 
 const model = require('../models/designrequest.model')
 
+const preSigner = require('../utils/urlgenerator.util')
+
 const add = async (req, res) => {
+    var assets = []
+    var stockimages = []
+    if (req.files.assets) {
+        assets = req.files.assets.map(asset => asset.key)
+    }
+    if (req.files.stockimages) {
+        stockimages = req.files.stockimages.map(image => image.key)
+    }
+
     const dr = new model({
         cid: req.uid,
-        ...req.body
+        ...req.body,
+        assets,
+        stockimages
     })
 
     try {
@@ -14,6 +27,8 @@ const add = async (req, res) => {
         await dr.populate('brand')
             .populate('designer')
             .execPopulate()
+        dr['assets'] = await preSigner(dr, 'assets')
+        dr['stockimages'] = await preSigner(dr, 'stockimages')
         res.status(201).send(dr)
     } catch (e) {
         res.status(400).send(e)

@@ -38,7 +38,10 @@ const upload = multer({
     },
 });
 
-router.post('/designrequests', auth({ hasRole: ['customer'] }), controller.add)
-router.get('/designrequests', auth({hasRole: ['customer', 'owner']}), controller.read)
+router.post('/designrequests', auth({ hasRole: ['customer'] }), upload.fields([
+    { name: 'assets', maxCount: 10 },
+    { name: 'stockimages', maxCount: 10 }
+]), controller.add)
+router.get('/designrequests', auth({ hasRole: ['customer', 'owner'] }), controller.read)
 
 module.exports = router
