@@ -2,6 +2,8 @@ const CONFIG = require('../config/config');
 
 const model = require('../models/brand.model')
 
+const preSigner = require('../utils/urlgenerator.util')
+
 const add = async (req, res) => {
     var assets = []
     var stockimages = []
@@ -20,8 +22,8 @@ const add = async (req, res) => {
     })
     try {
         await brand.save()
-        brand['assets'] = await brand.generatePreSignedURL('assets')
-        brand['stockimages'] = await brand.generatePreSignedURL('stockimages')
+        brand['assets'] = await preSigner(brand, 'assets')
+        brand['stockimages'] = await preSigner(brand, 'stockimages')
         res.status(201).send(brand)
     } catch (e) {
         res.status(500).send(e)
@@ -44,8 +46,8 @@ module.exports.read = read
 const readOne = async (req, res) => {
     try {
         const brand = await model.findById(req.params.id)
-        brand['assets'] = await brand.generatePreSignedURL('assets')
-        brand['stockimages'] = await brand.generatePreSignedURL('stockimages')
+        brand['assets'] = await preSigner(brand, 'assets')
+        brand['stockimages'] = await preSigner(brand, 'stockimages')
         res.send(brand)
     } catch (e) {
         res.status(404).send(e)
