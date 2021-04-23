@@ -3,17 +3,26 @@ const admin = require('firebase-admin')
 const model = require('../models/owner.model')
 
 const add = async (req, res) => {
-    const owner = new model(req.body)
-
     try {
-        await admin.auth().setCustomUserClaims(req.body.uid, {
+        const ownerRecord = await admin.auth().createUser({
+            email: req.body.email,
+            emailVerified: true,
+            phoneNumber: req.body.phone,
+            displayName: req.body.name,
+        })
+
+        const owner = new model({
+            uid: ownerRecord.uid,
+            ...req.body
+        })
+        await admin.auth().setCustomUserClaims(ownerRecord.uid, {
             role: 'owner'
         })
 
         await owner.save()
         res.status(201).send(owner)
     } catch (e) {
-        res.status(404).send({ error: 'User not found' })
+        res.status(500).send(e)
     }
 }
 
