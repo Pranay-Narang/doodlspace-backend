@@ -3,17 +3,27 @@ const admin = require('firebase-admin')
 const model = require('../models/designer.model')
 
 const add = async (req, res) => {
-    const designer = new model(req.body)
-
     try {
-        await admin.auth().setCustomUserClaims(req.body.uid, {
+        const designerRecord = await admin.auth().createUser({
+            email: req.body.email,
+            emailVerified: true,
+            phoneNumber: req.body.phone,
+            displayName: req.body.name,
+        })
+        
+        await admin.auth().setCustomUserClaims(designerRecord.uid, {
             role: 'designer'
+        })
+
+        const designer = new model({
+            uid: designerRecord.uid,
+            ...req.body
         })
 
         await designer.save()
         res.status(201).send(designer)
     } catch (e) {
-        res.status(404).send({ error: 'User not found' })
+        res.status(500).send(e)
     }
 }
 
