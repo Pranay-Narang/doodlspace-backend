@@ -1,4 +1,4 @@
-# ExpressJS Services Template
+# DoodlSpace Backend Server
 
 ## Starting Development Server
 
@@ -9,7 +9,9 @@ $ npm run dev
 
 ## Starting Production Server
 
-TODO
+```bash
+docker-compose up -d
+```
 
 ## Project Structure
 
