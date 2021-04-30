@@ -22,7 +22,14 @@
       {
         "name": "Owner",
         "description": "CRUD operation for owner"
-      }
+      },
+      {
+        "name" : "Supervisor",
+        "description" : "CRUD operations for supervisor"
+      }, {
+        "name" : "Customer",
+        "description" : "CRUD operation for customer"
+      } 
     ],
     "paths": {
       "/designers": {
@@ -264,7 +271,238 @@
             }
           }
         }
+      },
+      "/supervisors" : {
+        "get" : {
+          "summary" : "Retrieving all supervisors",
+          "tags" : [ "Supervisor" ],
+          "responses" : {
+            "200" : {
+              "description" : "Supervisors.",
+              "content" : {
+                "application/json" : {
+                  "schema" : {
+                    "$ref" : "#/components/schemas/Supervisor"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal error"
+            }
+          }
+        },
+        "post" : {
+          "summary" : "Adding a new Supervisor",
+          "tags" : [ "Supervisor" ],
+          "requestBody" : {
+            "required" : true,
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Supervisor"
+                }
+              }
+            }
+          },
+          "responses" : {
+            "201" : {
+              "description" : "Supervisor created.",
+              "content" : {
+                "application/json" : {
+                  "schema" : {
+                    "$ref" : "#/components/schemas/Supervisor"
+                  }
+                }
+              }
+            },
+            "404" : {
+              "description" : "User not found"
+            }
+          }
+        }
+      },
+      "/supervisors/{id}" : {
+        "patch" : {
+          "tags" : [ "Supervisor" ],
+          "summary" : "Update supervisor",
+          "parameters" : [ {
+            "name" : "id",
+            "in" : "path",
+            "required" : true,
+            "description" : "Supervisor that needs to updated",
+            "schema" : {
+              "type" : "string"
+            }
+          } ],
+          "requestBody" : {
+            "required" : true,
+            "description" : "updated user object",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Supervisor"
+                }
+              }
+            }
+          },
+          "responses" : {
+            "201" : {
+              "description" : "Supervisor updated",
+              "content" : {
+                "application/json" : {
+                  "schema" : {
+                    "$ref" : "#/components/schemas/Supervisor"
+                  }
+                }
+              }
+            },
+            "400" : {
+              "description" : "Invalid operation"
+            }
+          }
+        },
+        "delete" : {
+          "summary" : "Delete supervisor",
+          "tags" : [ "Supervisor" ],
+          "parameters" : [ {
+            "name" : "id",
+            "in" : "path",
+            "required" : true,
+            "description" : "The supervisor that need to be deleted",
+            "schema" : {
+              "type" : "string"
+            }
+          } ],
+          "responses" : {
+            "200" : {
+              "description" : "Supervisor deleted",
+              "content" : {
+                "application/json" : {
+                  "schema" : {
+                    "$ref" : "#/components/schemas/Supervisor"
+                  }
+                }
+              }
+            },
+            "404" : {
+              "description" : "Supervisor not found"
+            }
+          }
+        }
+      },
+      "/customers" : {
+        "get" : {
+          "summary" : "Retrieving customer",
+          "tags" : [ "Customer" ],
+          "responses" : {
+            "200" : {
+              "description" : "Customer.",
+              "content" : {
+                "application/json" : {
+                  "schema" : {
+                    "$ref" : "#/components/schemas/Customer"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal error"
+            }
+          }
+        },
+        "post" : {
+          "summary" : "Adding a new Customer",
+          "tags" : [ "Customer" ],
+          "requestBody" : {
+            "required" : true,
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Customer"
+                }
+              }
+            }
+          },
+          "responses" : {
+            "201" : {
+              "description" : "Created.",
+              "content" : {
+                "application/json" : {
+                  "schema" : {
+                    "$ref" : "#/components/schemas/Customer"
+                  }
+                }
+              }
+            },
+            "404" : {
+              "description" : "Customer not found"
+            }
+          }
+        },
+        "patch" : {
+          "tags" : [ "Customer" ],
+          "summary" : "Update customer",
+          "requestBody" : {
+            "required" : true,
+            "description" : "Updated customer object",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Customer"
+                }
+              }
+            }
+          },
+          "responses" : {
+            "201" : {
+              "description" : "Customer updated",
+              "content" : {
+                "application/json" : {
+                  "schema" : {
+                    "$ref" : "#/components/schemas/Customer"
+                  }
+                }
+              }
+            },
+            "400" : {
+              "description" : "Invalid operation"
+            }
+          }
+        }
+      },
+
+      "/customers/{id}" : {
+        "delete" : {
+          "summary" : "Delete customer",
+          "tags" : [ "Customers" ],
+          "parameters" : [ {
+            "name" : "id",
+            "in" : "path",
+            "required" : true,
+            "description" : "The customer that need to be deleted",
+            "schema" : {
+              "type" : "string"
+            }
+          } ],
+          "responses" : {
+            "200" : {
+              "description" : "Customer deleted",
+              "content" : {
+                "application/json" : {
+                  "schema" : {
+                    "$ref" : "#/components/schemas/Customer"
+                  }
+                }
+              }
+            },
+            "404" : {
+              "description" : "Customer not found"
+            }
+          }
+        }
       }
+  
     },
     "components": {
       "schemas": {
@@ -319,7 +557,50 @@
               "type": "integer"
             }
           }
+        },
+        "Customer" : {
+          "type" : "object",
+          "properties" : {
+            "uid" : {
+              "type" : "string",
+              "uniqueItems" : true
+            },
+            "name" : {
+              "type" : "string"
+            },
+            "phone" : {
+              "type" : "integer",
+              "format" : "int64"
+            },
+            "email" : {
+              "type" : "integer",
+              "uniqueItems" : true
+            }
+          },
+          "required" : [ "uid", "name", "phone", "email" ]
+        },
+        "Supervisor" : {
+          "type" : "object",
+          "properties" : {
+            "uid" : {
+              "type" : "string",
+              "uniqueItems" : true
+            },
+            "name" : {
+              "type" : "string"
+            },
+            "phone" : {
+              "type" : "integer",
+              "format" : "int64"
+            },
+            "email" : {
+              "type" : "integer",
+              "uniqueItems" : true
+            }
+          },
+          "required" : [ "uid", "name", "phone", "email" ]
         }
+      
       }
     }
   }
