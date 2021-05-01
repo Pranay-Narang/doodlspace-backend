@@ -24,7 +24,11 @@ const schema = new mongoose.Schema({
         },
         trim: true,
         lowercase: true
-    }
+    },
+    supervisor: {
+        type: String,
+        ref: 'Supervisor'
+    },
 }, {
     timestamps: true
 })

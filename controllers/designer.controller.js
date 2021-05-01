@@ -33,20 +33,20 @@ module.exports.add = add
 const read = async (req, res) => {
     try {
         if (req.role == 'designer') {
-            const designer = await model.find({ uid: req.uid })
+            const designer = await model.find({ uid: req.uid }).populate('supervisor')
             return res.send(designer)
         }
-        const designers = await model.find({})
+        const designers = await model.find({}).populate('supervisor')
         res.send(designers)
     } catch (e) {
-        res.status(500).send()
+        res.status(500).send(e)
     }
 }
 
 module.exports.read = read
 
 const update = async (req, res) => {
-    const allowedFields = ["name", "email", "phone"]
+    const allowedFields = ["name", "email", "phone", "supervisor"]
     const updates = Object.keys(req.body)
     const designer = await model.findOne({ uid: req.params.id })
 
