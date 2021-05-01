@@ -1,606 +1,858 @@
 {
-    "openapi": "3.0.0",
-    "info": {
-      "title": "Doodlspace API",
-      "description": "API documentation for Doodlspace API services",
-      "contact": {
-        "email": "email@email.com"
-      },
-      "version": "1.0.0-oas3"
-    },
-    "servers": [
-      {
-        "url": "https://test-api.doodlspace.com/services",
-        "description": "Swagger API Auto Mocking"
-      }
-    ],
-    "tags": [
-      {
-        "name": "Designer",
-        "description": "CRUD operations for designer"
-      },
-      {
-        "name": "Owner",
-        "description": "CRUD operation for owner"
-      },
-      {
-        "name" : "Supervisor",
-        "description" : "CRUD operations for supervisor"
-      }, {
-        "name" : "Customer",
-        "description" : "CRUD operation for customer"
-      } 
-    ],
-    "paths": {
-      "/designers": {
-        "get": {
-          "tags": [
-            "Designer"
-          ],
-          "summary": "Retrieving all the designers",
-          "responses": {
-            "200": {
-              "description": "Designers",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/Designer"
-                  }
-                }
-              }
-            },
-            "500": {
-              "description": "Internal error"
-            }
-          }
+  "openapi" : "3.0.0",
+  "info" : {
+    "version" : "1.0.0",
+    "title" : "DoodlSpace API",
+    "description" : ""
+  },
+  "tags" : [ {
+    "name" : "Owners"
+  }, {
+    "name" : "Designers"
+  }, {
+    "name" : "Supervisors"
+  }, {
+    "name" : "Customers"
+  } ],
+  "paths" : {
+    "/owners" : {
+      "post" : {
+        "tags" : [ "Owners" ],
+        "summary" : "Add an owner",
+        "requestBody" : {
+          "$ref" : "#/components/requestBodies/Owner"
         },
-        "post": {
-          "tags": [
-            "Designer"
-          ],
-          "summary": "Adding a new designer",
-          "requestBody": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Designer"
-                }
-              }
-            },
-            "required": true
-          },
-          "responses": {
-            "201": {
-              "description": "Created",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/Designer"
-                  }
-                }
-              }
-            },
-            "404": {
-              "description": "User not found"
-            }
-          }
-        }
-      },
-      "/designers/{id}": {
-        "delete": {
-          "tags": [
-            "Designer"
-          ],
-          "summary": "Delete designer",
-          "parameters": [
-            {
-              "name": "id",
-              "in": "path",
-              "description": "Designer that needs to be deleted",
-              "required": true,
-              "style": "simple",
-              "explode": false,
-              "schema": {
-                "type": "string"
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "Designer deleted"
-            },
-            "404": {
-              "description": "Designer not found"
-            }
-          }
-        },
-        "patch": {
-          "tags": [
-            "Designer"
-          ],
-          "summary": "Update designer",
-          "parameters": [
-            {
-              "name": "id",
-              "in": "path",
-              "description": "Designer that needs to be updated",
-              "required": true,
-              "style": "simple",
-              "explode": false,
-              "schema": {
-                "type": "string"
-              }
-            }
-          ],
-          "requestBody": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Designer"
-                }
-              }
-            },
-            "required": true
-          },
-          "responses": {
-            "200": {
-              "description": "Designer updated"
-            },
-            "400": {
-              "description": "Invalid operation"
-            }
-          }
-        }
-      },
-      "/owners": {
-        "get": {
-          "tags": [
-            "Owner"
-          ],
-          "summary": "Retrieving all the owners",
-          "responses": {
-            "200": {
-              "description": "Owners",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/Owner"
-                  }
-                }
-              }
-            },
-            "500": {
-              "description": "Internal error"
-            }
-          }
-        },
-        "post": {
-          "tags": [
-            "Owner"
-          ],
-          "summary": "Adding a new owner",
-          "requestBody": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Owner"
-                }
-              }
-            },
-            "required": true
-          },
-          "responses": {
-            "201": {
-              "description": "Created",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/Owner"
-                  }
-                }
-              }
-            },
-            "404": {
-              "description": "User not found"
-            }
-          }
-        }
-      },
-      "/owners/{id}": {
-        "delete": {
-          "tags": [
-            "Owner"
-          ],
-          "summary": "Delete owner",
-          "parameters": [
-            {
-              "name": "id",
-              "in": "path",
-              "description": "Owner that needs to be deleted",
-              "required": true,
-              "style": "simple",
-              "explode": false,
-              "schema": {
-                "type": "string"
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "Owner deleted"
-            },
-            "404": {
-              "description": "Owner not found"
-            }
-          }
-        },
-        "patch": {
-          "tags": [
-            "Owner"
-          ],
-          "summary": "Update owner",
-          "parameters": [
-            {
-              "name": "id",
-              "in": "path",
-              "description": "Owner that needs to be updated",
-              "required": true,
-              "style": "simple",
-              "explode": false,
-              "schema": {
-                "type": "string"
-              }
-            }
-          ],
-          "requestBody": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Owner"
-                }
-              }
-            },
-            "required": true
-          },
-          "responses": {
-            "200": {
-              "description": "Owner updated"
-            },
-            "400": {
-              "description": "Invalid operation"
-            }
-          }
-        }
-      },
-      "/supervisors" : {
-        "get" : {
-          "summary" : "Retrieving all supervisors",
-          "tags" : [ "Supervisor" ],
-          "responses" : {
-            "200" : {
-              "description" : "Supervisors.",
-              "content" : {
-                "application/json" : {
-                  "schema" : {
-                    "$ref" : "#/components/schemas/Supervisor"
-                  }
-                }
-              }
-            },
-            "500": {
-              "description": "Internal error"
-            }
-          }
-        },
-        "post" : {
-          "summary" : "Adding a new Supervisor",
-          "tags" : [ "Supervisor" ],
-          "requestBody" : {
-            "required" : true,
+        "responses" : {
+          "201" : {
+            "description" : "Created",
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/Supervisor"
-                }
-              }
-            }
-          },
-          "responses" : {
-            "201" : {
-              "description" : "Supervisor created.",
-              "content" : {
-                "application/json" : {
-                  "schema" : {
-                    "$ref" : "#/components/schemas/Supervisor"
+                  "allOf" : [ {
+                    "$ref" : "#/components/schemas/Owner"
+                  } ],
+                  "type" : "object",
+                  "properties" : {
+                    "_id" : {
+                      "type" : "string"
+                    },
+                    "uid" : {
+                      "type" : "string"
+                    },
+                    "createdAt" : {
+                      "type" : "string",
+                      "format" : "date-time"
+                    }
                   }
                 }
               }
-            },
-            "404" : {
-              "description" : "User not found"
             }
           }
         }
       },
-      "/supervisors/{id}" : {
-        "patch" : {
-          "tags" : [ "Supervisor" ],
-          "summary" : "Update supervisor",
-          "parameters" : [ {
-            "name" : "id",
-            "in" : "path",
-            "required" : true,
-            "description" : "Supervisor that needs to updated",
-            "schema" : {
-              "type" : "string"
-            }
-          } ],
-          "requestBody" : {
-            "required" : true,
-            "description" : "updated user object",
+      "get" : {
+        "tags" : [ "Owners" ],
+        "summary" : "Fetch owners",
+        "responses" : {
+          "200" : {
+            "description" : "Success",
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/Supervisor"
-                }
-              }
-            }
-          },
-          "responses" : {
-            "201" : {
-              "description" : "Supervisor updated",
-              "content" : {
-                "application/json" : {
-                  "schema" : {
-                    "$ref" : "#/components/schemas/Supervisor"
+                  "type" : "array",
+                  "items" : {
+                    "allOf" : [ {
+                      "$ref" : "#/components/schemas/Owner"
+                    } ],
+                    "type" : "object",
+                    "properties" : {
+                      "_id" : {
+                        "type" : "string"
+                      },
+                      "uid" : {
+                        "type" : "string"
+                      },
+                      "createdAt" : {
+                        "type" : "string",
+                        "format" : "date-time"
+                      }
+                    }
                   }
                 }
               }
-            },
-            "400" : {
-              "description" : "Invalid operation"
-            }
-          }
-        },
-        "delete" : {
-          "summary" : "Delete supervisor",
-          "tags" : [ "Supervisor" ],
-          "parameters" : [ {
-            "name" : "id",
-            "in" : "path",
-            "required" : true,
-            "description" : "The supervisor that need to be deleted",
-            "schema" : {
-              "type" : "string"
-            }
-          } ],
-          "responses" : {
-            "200" : {
-              "description" : "Supervisor deleted",
-              "content" : {
-                "application/json" : {
-                  "schema" : {
-                    "$ref" : "#/components/schemas/Supervisor"
-                  }
-                }
-              }
-            },
-            "404" : {
-              "description" : "Supervisor not found"
-            }
-          }
-        }
-      },
-      "/customers" : {
-        "get" : {
-          "summary" : "Retrieving customer",
-          "tags" : [ "Customer" ],
-          "responses" : {
-            "200" : {
-              "description" : "Customer.",
-              "content" : {
-                "application/json" : {
-                  "schema" : {
-                    "$ref" : "#/components/schemas/Customer"
-                  }
-                }
-              }
-            },
-            "500": {
-              "description": "Internal error"
-            }
-          }
-        },
-        "post" : {
-          "summary" : "Adding a new Customer",
-          "tags" : [ "Customer" ],
-          "requestBody" : {
-            "required" : true,
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/Customer"
-                }
-              }
-            }
-          },
-          "responses" : {
-            "201" : {
-              "description" : "Created.",
-              "content" : {
-                "application/json" : {
-                  "schema" : {
-                    "$ref" : "#/components/schemas/Customer"
-                  }
-                }
-              }
-            },
-            "404" : {
-              "description" : "Customer not found"
-            }
-          }
-        },
-        "patch" : {
-          "tags" : [ "Customer" ],
-          "summary" : "Update customer",
-          "requestBody" : {
-            "required" : true,
-            "description" : "Updated customer object",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/Customer"
-                }
-              }
-            }
-          },
-          "responses" : {
-            "201" : {
-              "description" : "Customer updated",
-              "content" : {
-                "application/json" : {
-                  "schema" : {
-                    "$ref" : "#/components/schemas/Customer"
-                  }
-                }
-              }
-            },
-            "400" : {
-              "description" : "Invalid operation"
-            }
-          }
-        }
-      },
-
-      "/customers/{id}" : {
-        "delete" : {
-          "summary" : "Delete customer",
-          "tags" : [ "Customers" ],
-          "parameters" : [ {
-            "name" : "id",
-            "in" : "path",
-            "required" : true,
-            "description" : "The customer that need to be deleted",
-            "schema" : {
-              "type" : "string"
-            }
-          } ],
-          "responses" : {
-            "200" : {
-              "description" : "Customer deleted",
-              "content" : {
-                "application/json" : {
-                  "schema" : {
-                    "$ref" : "#/components/schemas/Customer"
-                  }
-                }
-              }
-            },
-            "404" : {
-              "description" : "Customer not found"
             }
           }
         }
       }
-  
     },
-    "components": {
-      "schemas": {
-        "Designer": {
-          "required": [
-            "email",
-            "name",
-            "phone",
-            "uid"
-          ],
-          "type": "object",
-          "properties": {
-            "uid": {
-              "uniqueItems": true,
-              "type": "string"
-            },
-            "name": {
-              "type": "string"
-            },
-            "phone": {
-              "type": "integer",
-              "format": "int64"
-            },
-            "email": {
-              "uniqueItems": true,
-              "type": "integer"
+    "/owners/{id}" : {
+      "patch" : {
+        "tags" : [ "Owners" ],
+        "summary" : "Update owner",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "$ref" : "#/components/requestBodies/Owner"
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "allOf" : [ {
+                    "$ref" : "#/components/schemas/Owner"
+                  } ],
+                  "type" : "object",
+                  "properties" : {
+                    "_id" : {
+                      "type" : "string"
+                    },
+                    "uid" : {
+                      "type" : "string"
+                    },
+                    "createdAt" : {
+                      "type" : "string",
+                      "format" : "date-time"
+                    }
+                  }
+                }
+              }
             }
           }
-        },
-        "Owner": {
-          "required": [
-            "email",
-            "name",
-            "phone",
-            "uid"
-          ],
-          "type": "object",
-          "properties": {
-            "uid": {
-              "uniqueItems": true,
-              "type": "string"
-            },
-            "name": {
-              "type": "string"
-            },
-            "phone": {
-              "type": "integer",
-              "format": "int64"
-            },
-            "email": {
-              "uniqueItems": true,
-              "type": "integer"
-            }
-          }
-        },
-        "Customer" : {
-          "type" : "object",
-          "properties" : {
-            "uid" : {
-              "type" : "string",
-              "uniqueItems" : true
-            },
-            "name" : {
-              "type" : "string"
-            },
-            "phone" : {
-              "type" : "integer",
-              "format" : "int64"
-            },
-            "email" : {
-              "type" : "integer",
-              "uniqueItems" : true
-            }
-          },
-          "required" : [ "uid", "name", "phone", "email" ]
-        },
-        "Supervisor" : {
-          "type" : "object",
-          "properties" : {
-            "uid" : {
-              "type" : "string",
-              "uniqueItems" : true
-            },
-            "name" : {
-              "type" : "string"
-            },
-            "phone" : {
-              "type" : "integer",
-              "format" : "int64"
-            },
-            "email" : {
-              "type" : "integer",
-              "uniqueItems" : true
-            }
-          },
-          "required" : [ "uid", "name", "phone", "email" ]
         }
-      
+      },
+      "delete" : {
+        "tags" : [ "Owners" ],
+        "summary" : "Delete owner",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "allOf" : [ {
+                    "$ref" : "#/components/schemas/Owner"
+                  } ],
+                  "type" : "object",
+                  "properties" : {
+                    "_id" : {
+                      "type" : "string"
+                    },
+                    "uid" : {
+                      "type" : "string"
+                    },
+                    "createdAt" : {
+                      "type" : "string",
+                      "format" : "date-time"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/designers" : {
+      "post" : {
+        "tags" : [ "Designers" ],
+        "summary" : "Add a designer",
+        "requestBody" : {
+          "$ref" : "#/components/requestBodies/Designer"
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "allOf" : [ {
+                    "$ref" : "#/components/schemas/Designer"
+                  } ],
+                  "type" : "object",
+                  "properties" : {
+                    "_id" : {
+                      "type" : "string"
+                    },
+                    "uid" : {
+                      "type" : "string"
+                    },
+                    "createdAt" : {
+                      "type" : "string",
+                      "format" : "date-time"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get" : {
+        "tags" : [ "Designers" ],
+        "summary" : "Fetch designer(s)",
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "allOf" : [ {
+                      "$ref" : "#/components/schemas/Designer"
+                    } ],
+                    "type" : "object",
+                    "properties" : {
+                      "supervisor" : {
+                        "allOf" : [ {
+                          "$ref" : "#/components/schemas/Supervisor"
+                        } ],
+                        "type" : "object",
+                        "properties" : {
+                          "_id" : {
+                            "type" : "string"
+                          },
+                          "uid" : {
+                            "type" : "string"
+                          },
+                          "createdAt" : {
+                            "type" : "string",
+                            "format" : "date-time"
+                          }
+                        }
+                      },
+                      "_id" : {
+                        "type" : "string"
+                      },
+                      "uid" : {
+                        "type" : "string"
+                      },
+                      "createdAt" : {
+                        "type" : "string",
+                        "format" : "date-time"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/designers/{id}" : {
+      "patch" : {
+        "tags" : [ "Designers" ],
+        "summary" : "Update designer",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "$ref" : "#/components/requestBodies/Designer"
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "allOf" : [ {
+                    "$ref" : "#/components/schemas/Designer"
+                  } ],
+                  "type" : "object",
+                  "properties" : {
+                    "_id" : {
+                      "type" : "string"
+                    },
+                    "uid" : {
+                      "type" : "string"
+                    },
+                    "createdAt" : {
+                      "type" : "string",
+                      "format" : "date-time"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "Designers" ],
+        "summary" : "Delete designer",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "allOf" : [ {
+                    "$ref" : "#/components/schemas/Designer"
+                  } ],
+                  "type" : "object",
+                  "properties" : {
+                    "_id" : {
+                      "type" : "string"
+                    },
+                    "uid" : {
+                      "type" : "string"
+                    },
+                    "createdAt" : {
+                      "type" : "string",
+                      "format" : "date-time"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/designers/{id}/customers" : {
+      "get" : {
+        "tags" : [ "Designers" ],
+        "summary" : "Fetch customers for the designer",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "allOf" : [ {
+                      "$ref" : "#/components/schemas/Customer"
+                    } ],
+                    "type" : "object",
+                    "properties" : {
+                      "_id" : {
+                        "type" : "string"
+                      },
+                      "uid" : {
+                        "type" : "string"
+                      },
+                      "createdAt" : {
+                        "type" : "string",
+                        "format" : "date-time"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/supervisors" : {
+      "post" : {
+        "tags" : [ "Supervisors" ],
+        "summary" : "Add a supervisor",
+        "requestBody" : {
+          "$ref" : "#/components/requestBodies/Supervisor"
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "allOf" : [ {
+                    "$ref" : "#/components/schemas/Supervisor"
+                  } ],
+                  "type" : "object",
+                  "properties" : {
+                    "_id" : {
+                      "type" : "string"
+                    },
+                    "uid" : {
+                      "type" : "string"
+                    },
+                    "createdAt" : {
+                      "type" : "string",
+                      "format" : "date-time"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get" : {
+        "tags" : [ "Supervisors" ],
+        "summary" : "Fetch supervisor(s)",
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "allOf" : [ {
+                      "$ref" : "#/components/schemas/Supervisor"
+                    } ],
+                    "type" : "object",
+                    "properties" : {
+                      "_id" : {
+                        "type" : "string"
+                      },
+                      "uid" : {
+                        "type" : "string"
+                      },
+                      "createdAt" : {
+                        "type" : "string",
+                        "format" : "date-time"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/supervisors/{id}" : {
+      "patch" : {
+        "tags" : [ "Supervisors" ],
+        "summary" : "Update supervisor",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "$ref" : "#/components/requestBodies/Supervisor"
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "allOf" : [ {
+                    "$ref" : "#/components/schemas/Supervisor"
+                  } ],
+                  "type" : "object",
+                  "properties" : {
+                    "_id" : {
+                      "type" : "string"
+                    },
+                    "uid" : {
+                      "type" : "string"
+                    },
+                    "createdAt" : {
+                      "type" : "string",
+                      "format" : "date-time"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "Supervisors" ],
+        "summary" : "Delete supervisor",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "allOf" : [ {
+                    "$ref" : "#/components/schemas/Supervisor"
+                  } ],
+                  "type" : "object",
+                  "properties" : {
+                    "_id" : {
+                      "type" : "string"
+                    },
+                    "uid" : {
+                      "type" : "string"
+                    },
+                    "createdAt" : {
+                      "type" : "string",
+                      "format" : "date-time"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/supervisors/{id}/designers" : {
+      "get" : {
+        "tags" : [ "Supervisors" ],
+        "summary" : "Fetch designers for the supervisor",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "allOf" : [ {
+                      "$ref" : "#/components/schemas/Designer"
+                    } ],
+                    "type" : "object",
+                    "properties" : {
+                      "_id" : {
+                        "type" : "string"
+                      },
+                      "uid" : {
+                        "type" : "string"
+                      },
+                      "createdAt" : {
+                        "type" : "string",
+                        "format" : "date-time"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/customers" : {
+      "post" : {
+        "tags" : [ "Customers" ],
+        "summary" : "Add a customer",
+        "requestBody" : {
+          "$ref" : "#/components/requestBodies/Customer"
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "allOf" : [ {
+                    "$ref" : "#/components/schemas/Customer"
+                  } ],
+                  "type" : "object",
+                  "properties" : {
+                    "_id" : {
+                      "type" : "string"
+                    },
+                    "uid" : {
+                      "type" : "string"
+                    },
+                    "createdAt" : {
+                      "type" : "string",
+                      "format" : "date-time"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get" : {
+        "tags" : [ "Customers" ],
+        "summary" : "Fetch customer(s)",
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "allOf" : [ {
+                      "$ref" : "#/components/schemas/Customer"
+                    } ],
+                    "type" : "object",
+                    "properties" : {
+                      "_id" : {
+                        "type" : "string"
+                      },
+                      "uid" : {
+                        "type" : "string"
+                      },
+                      "createdAt" : {
+                        "type" : "string",
+                        "format" : "date-time"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/customers/{id}" : {
+      "patch" : {
+        "tags" : [ "Customers" ],
+        "summary" : "Update customer",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "$ref" : "#/components/requestBodies/Customer"
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "allOf" : [ {
+                    "$ref" : "#/components/schemas/Customer"
+                  } ],
+                  "type" : "object",
+                  "properties" : {
+                    "_id" : {
+                      "type" : "string"
+                    },
+                    "uid" : {
+                      "type" : "string"
+                    },
+                    "createdAt" : {
+                      "type" : "string",
+                      "format" : "date-time"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "Customers" ],
+        "summary" : "Delete supervisor",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "allOf" : [ {
+                    "$ref" : "#/components/schemas/Customer"
+                  } ],
+                  "type" : "object",
+                  "properties" : {
+                    "_id" : {
+                      "type" : "string"
+                    },
+                    "uid" : {
+                      "type" : "string"
+                    },
+                    "createdAt" : {
+                      "type" : "string",
+                      "format" : "date-time"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     }
-  }
+  },
+  "components" : {
+    "schemas" : {
+      "Owner" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          },
+          "email" : {
+            "type" : "string"
+          },
+          "phone" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Designer" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          },
+          "email" : {
+            "type" : "string"
+          },
+          "phone" : {
+            "type" : "string"
+          },
+          "supervisor" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Supervisor" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          },
+          "email" : {
+            "type" : "string"
+          },
+          "phone" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Customer" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          },
+          "email" : {
+            "type" : "string"
+          },
+          "phone" : {
+            "type" : "string"
+          },
+          "designers" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes" : {
+      "bearerAuth" : {
+        "type" : "http",
+        "scheme" : "bearer",
+        "bearerFormat" : "JWT"
+      }
+    },
+    "requestBodies" : {
+      "Owner" : {
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/Owner"
+            }
+          }
+        }
+      },
+      "Designer" : {
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/Designer"
+            }
+          }
+        }
+      },
+      "Supervisor" : {
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/Supervisor"
+            }
+          }
+        }
+      },
+      "Customer" : {
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/Customer"
+            }
+          }
+        }
+      }
+    }
+  },
+  "servers" : [ {
+    "description" : "Test Server",
+    "url" : "https://test-api.doodlspace.com/services"
+  } ],
+  "security" : [ {
+    "bearerAuth" : [ ]
+  } ]
+}
