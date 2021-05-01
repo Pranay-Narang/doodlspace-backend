@@ -1,6 +1,7 @@
 const admin = require("firebase-admin");
 
 const model = require("../models/supervisor.model");
+const designerModel = require("../models/designer.model")
 
 const add = async (req, res) => {
   const supervisor = new model(req.body);
@@ -21,6 +22,10 @@ module.exports.add = add;
 
 const read = async (req, res) => {
   try {
+    if (req.role == 'supervisor') {
+      const supervisor = await model.find({ uid: req.uid })
+      return res.send(supervisor)
+    }
     const supervisors = await model.find({});
     res.send(supervisors);
   } catch (e) {
@@ -62,3 +67,10 @@ const remove = async (req, res) => {
 };
 
 module.exports.remove = remove;
+
+const readDesigners = async (req, res) => {
+  const designers = await designerModel.find({ supervisor: req.params.id })
+  res.send(designers)
+}
+
+module.exports.readDesigners = readDesigners
