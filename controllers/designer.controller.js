@@ -1,6 +1,7 @@
 const admin = require('firebase-admin')
 
 const model = require('../models/designer.model')
+const customerModel = require('../models/customer.model')
 
 const add = async (req, res) => {
     try {
@@ -10,7 +11,7 @@ const add = async (req, res) => {
             phoneNumber: req.body.phone,
             displayName: req.body.name,
         })
-        
+
         await admin.auth().setCustomUserClaims(designerRecord.uid, {
             role: 'designer'
         })
@@ -72,3 +73,10 @@ const remove = async (req, res) => {
 }
 
 module.exports.remove = remove
+
+const readCustomers = async (req, res) => {
+    const customers = await customerModel.find({ designers: req.params.id })
+    res.send(customers)
+}
+
+module.exports.readCustomers = readCustomers
