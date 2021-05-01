@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const logger = require('morgan')
 const admin = require("firebase-admin")
 const cors = require("cors")
+const swaggerUi = require('swagger-ui-express');
 
 const CONFIG = require('./config/config')
 const routes = require('./routes')
@@ -47,9 +48,11 @@ if (CONFIG.APP_ENV == 'development') {
     app.use(logger('dev'))
 }
 
-app.use('/openapi', async (req, res) => {
-    res.send(openapi)
-})
+var options = {
+    customCss: '.swagger-ui .topbar { display: none }'
+};
+
+app.use('/documentation', swaggerUi.serve, swaggerUi.setup(openapi, options))
 
 app.get('/health', async (req, res) => {
     res.status(200).send({
