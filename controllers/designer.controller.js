@@ -32,6 +32,10 @@ module.exports.add = add
 
 const read = async (req, res) => {
     try {
+        if (req.role == 'designer') {
+            const designer = await model.find({ uid: req.uid })
+            return res.send(designer)
+        }
         const designers = await model.find({})
         res.send(designers)
     } catch (e) {
