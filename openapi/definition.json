@@ -1099,6 +1099,80 @@
             "items" : {
               "type" : "string"
             }
+          },
+          "address" : {
+            "type" : "object",
+            "properties" : {
+              "line1" : {
+                "type" : "string"
+              },
+              "line2" : {
+                "type" : "string"
+              },
+              "city" : {
+                "type" : "string"
+              },
+              "state" : {
+                "type" : "string"
+              },
+              "pincode" : {
+                "type" : "string"
+              }
+            }
+          },
+          "company" : {
+            "type" : "object",
+            "properties" : {
+              "name" : {
+                "type" : "string"
+              },
+              "address" : {
+                "type" : "string"
+              },
+              "email" : {
+                "type" : "string"
+              },
+              "number" : {
+                "type" : "string"
+              },
+              "GSTIN" : {
+                "type" : "string"
+              },
+              "employees" : {
+                "type" : "string",
+                "enum" : [ "Only me", "2-20", "21-50", "51-100", "100+" ]
+              },
+              "industry" : {
+                "type" : "string"
+              },
+              "showcase" : {
+                "type" : "boolean"
+              },
+              "social" : {
+                "type" : "object",
+                "properties" : {
+                  "instagram" : {
+                    "type" : "string"
+                  },
+                  "facebook" : {
+                    "type" : "string"
+                  },
+                  "website" : {
+                    "type" : "string"
+                  }
+                }
+              },
+              "description" : {
+                "type" : "string"
+              },
+              "designpreferences" : {
+                "type" : "array",
+                "items" : {
+                  "type" : "string",
+                  "enum" : [ "Social Media Creatives", "Print Collaterals", "Outdoor Creatives", "Website banners, graphics", "Merchandise", "Infographics" ]
+                }
+              }
+            }
           }
         }
       },
