@@ -1,6 +1,7 @@
 const admin = require('firebase-admin')
 
 const model = require('../models/customer.model')
+const brandModel = require('../models/brand.model')
 
 const add = async (req, res) => {
     const allowedFields = ["name", "email", "phone"]
@@ -75,3 +76,14 @@ const remove = async (req, res) => {
 }
 
 module.exports.remove = remove
+
+const readBrands = async (req, res) => {
+    try {
+        const brands = await brandModel.find({ cid: req.params.id })
+        res.send(brands)
+    } catch (e) {
+        res.status(404).send(e)
+    }
+}
+
+module.exports.readBrands = readBrands
