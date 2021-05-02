@@ -3,7 +3,7 @@
   "info" : {
     "version" : "1.0.0",
     "title" : "DoodlSpace API",
-    "description" : ""
+    "description" : "API Documentation for DoodlSpace"
   },
   "tags" : [ {
     "name" : "Owners"
@@ -13,6 +13,8 @@
     "name" : "Supervisors"
   }, {
     "name" : "Customers"
+  }, {
+    "name" : "Brands"
   } ],
   "paths" : {
     "/owners" : {
@@ -695,7 +697,7 @@
       },
       "delete" : {
         "tags" : [ "Customers" ],
-        "summary" : "Delete supervisor",
+        "summary" : "Delete customer",
         "parameters" : [ {
           "in" : "path",
           "name" : "id",
@@ -712,6 +714,305 @@
                 "schema" : {
                   "allOf" : [ {
                     "$ref" : "#/components/schemas/Customer"
+                  } ],
+                  "type" : "object",
+                  "properties" : {
+                    "_id" : {
+                      "type" : "string"
+                    },
+                    "uid" : {
+                      "type" : "string"
+                    },
+                    "createdAt" : {
+                      "type" : "string",
+                      "format" : "date-time"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/customers/{id}/brands" : {
+      "get" : {
+        "tags" : [ "Customers" ],
+        "summary" : "Fetch brands for a customer",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "allOf" : [ {
+                      "$ref" : "#/components/schemas/Brand"
+                    } ],
+                    "type" : "object",
+                    "properties" : {
+                      "_id" : {
+                        "type" : "string"
+                      },
+                      "uid" : {
+                        "type" : "string"
+                      },
+                      "createdAt" : {
+                        "type" : "string",
+                        "format" : "date-time"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/brands" : {
+      "post" : {
+        "tags" : [ "Brands" ],
+        "summary" : "Add a brand",
+        "requestBody" : {
+          "$ref" : "#/components/requestBodies/Brand"
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "allOf" : [ {
+                    "$ref" : "#/components/schemas/Brand"
+                  } ],
+                  "type" : "object",
+                  "properties" : {
+                    "assets" : {
+                      "type" : "array",
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "name" : {
+                            "type" : "string"
+                          },
+                          "link" : {
+                            "type" : "string"
+                          }
+                        }
+                      }
+                    },
+                    "stockimages" : {
+                      "type" : "array",
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "name" : {
+                            "type" : "string"
+                          },
+                          "link" : {
+                            "type" : "string"
+                          }
+                        }
+                      }
+                    },
+                    "_id" : {
+                      "type" : "string"
+                    },
+                    "uid" : {
+                      "type" : "string"
+                    },
+                    "createdAt" : {
+                      "type" : "string",
+                      "format" : "date-time"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get" : {
+        "tags" : [ "Brands" ],
+        "summary" : "Fetch all brands",
+        "parameters" : [ {
+          "in" : "query",
+          "name" : "cid",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "allOf" : [ {
+                      "$ref" : "#/components/schemas/Brand"
+                    } ],
+                    "type" : "object",
+                    "properties" : {
+                      "_id" : {
+                        "type" : "string"
+                      },
+                      "uid" : {
+                        "type" : "string"
+                      },
+                      "createdAt" : {
+                        "type" : "string",
+                        "format" : "date-time"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/brands/{id}" : {
+      "get" : {
+        "tags" : [ "Brands" ],
+        "summary" : "Fetch specified brand",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "allOf" : [ {
+                    "$ref" : "#/components/schemas/Brand"
+                  } ],
+                  "type" : "object",
+                  "properties" : {
+                    "assets" : {
+                      "type" : "array",
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "name" : {
+                            "type" : "string"
+                          },
+                          "link" : {
+                            "type" : "string"
+                          }
+                        }
+                      }
+                    },
+                    "stockimages" : {
+                      "type" : "array",
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "name" : {
+                            "type" : "string"
+                          },
+                          "link" : {
+                            "type" : "string"
+                          }
+                        }
+                      }
+                    },
+                    "_id" : {
+                      "type" : "string"
+                    },
+                    "uid" : {
+                      "type" : "string"
+                    },
+                    "createdAt" : {
+                      "type" : "string",
+                      "format" : "date-time"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch" : {
+        "tags" : [ "Brands" ],
+        "summary" : "Update brand",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "$ref" : "#/components/requestBodies/Brand"
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "allOf" : [ {
+                    "$ref" : "#/components/schemas/Brand"
+                  } ],
+                  "type" : "object",
+                  "properties" : {
+                    "_id" : {
+                      "type" : "string"
+                    },
+                    "uid" : {
+                      "type" : "string"
+                    },
+                    "createdAt" : {
+                      "type" : "string",
+                      "format" : "date-time"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "Brands" ],
+        "summary" : "Delete brand",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "allOf" : [ {
+                    "$ref" : "#/components/schemas/Brand"
                   } ],
                   "type" : "object",
                   "properties" : {
@@ -800,6 +1101,72 @@
             }
           }
         }
+      },
+      "Brand" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          },
+          "description" : {
+            "type" : "string"
+          },
+          "social" : {
+            "type" : "object",
+            "properties" : {
+              "instagram" : {
+                "type" : "string"
+              },
+              "facebook" : {
+                "type" : "string"
+              },
+              "website" : {
+                "type" : "string"
+              }
+            }
+          },
+          "fonts" : {
+            "type" : "array",
+            "items" : {
+              "type" : "object",
+              "properties" : {
+                "name" : {
+                  "type" : "string"
+                },
+                "family" : {
+                  "type" : "string"
+                },
+                "variant" : {
+                  "type" : "string"
+                },
+                "URL" : {
+                  "type" : "string"
+                }
+              }
+            }
+          },
+          "colors" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "assets" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "stockimages" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "cid" : {
+            "type" : "string"
+          }
+        }
       }
     },
     "securitySchemes" : {
@@ -842,6 +1209,34 @@
           "application/json" : {
             "schema" : {
               "$ref" : "#/components/schemas/Customer"
+            }
+          }
+        }
+      },
+      "Brand" : {
+        "content" : {
+          "multipart/form-data" : {
+            "schema" : {
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/Brand"
+              } ],
+              "type" : "object",
+              "properties" : {
+                "assets" : {
+                  "type" : "array",
+                  "items" : {
+                    "type" : "string",
+                    "format" : "binary"
+                  }
+                },
+                "stockimages" : {
+                  "type" : "array",
+                  "items" : {
+                    "type" : "string",
+                    "format" : "binary"
+                  }
+                }
+              }
             }
           }
         }
