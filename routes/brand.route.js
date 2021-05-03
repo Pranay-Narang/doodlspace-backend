@@ -40,13 +40,15 @@ const upload = multer({
 
 router.post('/brands', auth({ hasRole: ['customer'] }), upload.fields([
     { name: 'assets', maxCount: 10 },
-    { name: 'stockimages', maxCount: 10 }
+    { name: 'stockimages', maxCount: 10 },
+    { name: 'logo', maxCount: 1 }
 ]), controller.add)
 router.get('/brands', auth({ hasRole: ['owner'] }), controller.read)
 router.get('/brands/:id', auth({ hasRole: ['owner', 'designer', 'customer'] }), controller.readOne)
 router.patch('/brands/:id', auth({ hasRole: ['customer', 'owner'] }), upload.fields([
     { name: 'assets', maxCount: 10 },
-    { name: 'stockimages', maxCount: 10 }
+    { name: 'stockimages', maxCount: 10 },
+    { name: 'logo', maxCount: 1 }
 ]), controller.update)
 router.delete('/brands/:id', auth({ hasRole: ['owner'] }), controller.remove)
 

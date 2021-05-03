@@ -38,6 +38,7 @@ const schema = new mongoose.Schema(
         description: String,
         colors: Array,
         social: socialSchema,
+        logo: Array,
         assets: Array,
         stockimages: Array,
         fonts: [fontSchema]

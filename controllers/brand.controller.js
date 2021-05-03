@@ -13,17 +13,22 @@ const add = async (req, res) => {
     if (req.files.stockimages) {
         stockimages = req.files.stockimages.map(image => image.key)
     }
+    if(req.files.logo) {
+        logo = req.files.logo.map(e => e.key)
+    }
 
     const brand = new model({
         cid: req.uid,
         ...req.body,
         assets,
-        stockimages
+        stockimages,
+        logo
     })
     try {
         await brand.save()
         brand['assets'] = await preSigner(brand, 'assets')
         brand['stockimages'] = await preSigner(brand, 'stockimages')
+        brand['logo'] = await preSigner(brand, 'logo')
         res.status(201).send(brand)
     } catch (e) {
         res.status(500).send(e)
