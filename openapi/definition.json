@@ -825,6 +825,20 @@
                         }
                       }
                     },
+                    "logo" : {
+                      "type" : "array",
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "name" : {
+                            "type" : "string"
+                          },
+                          "link" : {
+                            "type" : "string"
+                          }
+                        }
+                      }
+                    },
                     "_id" : {
                       "type" : "string"
                     },
@@ -922,6 +936,20 @@
                       }
                     },
                     "stockimages" : {
+                      "type" : "array",
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "name" : {
+                            "type" : "string"
+                          },
+                          "link" : {
+                            "type" : "string"
+                          }
+                        }
+                      }
+                    },
+                    "logo" : {
                       "type" : "array",
                       "items" : {
                         "type" : "object",
@@ -1237,8 +1265,20 @@
               "type" : "string"
             }
           },
+          "stockimagelinks" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          },
           "cid" : {
             "type" : "string"
+          },
+          "logo" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
           }
         }
       }
