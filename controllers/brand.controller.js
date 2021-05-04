@@ -7,6 +7,8 @@ const preSigner = require('../utils/urlgenerator.util')
 const add = async (req, res) => {
     var assets = []
     var stockimages = []
+    var logo = []
+    
     if (req.files.assets) {
         assets = req.files.assets.map(asset => asset.key)
     }
