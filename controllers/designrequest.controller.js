@@ -86,6 +86,10 @@ const update = async (req, res) => {
         updates.forEach((elem) => dr[elem] = req.body[elem])
         dr['assets'] = dr['assets'].concat(assets)
         await dr.save()
+        await dr.populate('brand')
+            .populate('designer')
+            .execPopulate()
+        dr['assets'] = await preSigner(dr, 'assets')
         res.send(dr)
     } catch (e) {
         res.status(400).send(e)
