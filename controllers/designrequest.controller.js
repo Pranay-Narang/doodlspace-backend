@@ -55,6 +55,10 @@ const readOne = async (req, res) => {
             .populate('brand')
             .populate('designer')
 
+        if(!dr) {
+            return res.status(404).send({})
+        } 
+        
         dr['assets'] = await preSigner(dr, 'assets')
         return res.send(dr)
     }
