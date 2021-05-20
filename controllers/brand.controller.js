@@ -89,7 +89,6 @@ const update = async (req, res) => {
         await brand.save()
         res.send(brand)
     } catch (e) {
-        console.log(e)
         res.status(400).send(e)
     }
 }
