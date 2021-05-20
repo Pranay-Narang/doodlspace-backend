@@ -42,6 +42,10 @@ router.post('/designrequests', auth({ hasRole: ['customer'] }), upload.fields([
     { name: 'assets', maxCount: 10 },
 ]), controller.add)
 router.get('/designrequests', auth({ hasRole: ['customer', 'owner'] }), controller.read)
-router.get('/designrequests/:id', auth({hasRole: ['customer', 'owner']}), controller.readOne)
+router.get('/designrequests/:id', auth({ hasRole: ['customer', 'owner'] }), controller.readOne)
+router.patch('/designrequests/:id', auth({ hasRole: ['customer', 'owner'] }), upload.fields([
+    { name: 'assets', maxCount: 10 },
+]), controller.update)
+router.delete('/designrequests/:id', auth({ hasRole: ['customer', 'owner'] }), controller.remove)
 
 module.exports = router

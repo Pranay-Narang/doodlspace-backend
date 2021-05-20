@@ -66,3 +66,47 @@ const readOne = async (req, res) => {
 }
 
 module.exports.readOne = readOne
+
+const update = async (req, res) => {
+    const allowedFields = ["name", "description", "copywrite", "brand", "formats", "native", "sizes", "assets", "stockimages"]
+    const updates = Object.keys(req.body)
+    const dr = await model.findById(req.params.id)
+
+    var assets = []
+    const validOperation = updates.every((elem) => allowedFields.includes(elem))
+    if (!validOperation) {
+        return res.status(400).send({ error: "Invalid operation" })
+    }
+
+    if (req.files.assets) {
+        assets = req.files.assets.map(asset => asset.key)
+    }
+
+    try {
+        updates.forEach((elem) => dr[elem] = req.body[elem])
+        dr['assets'] = dr['assets'].concat(assets)
+        await dr.save()
+        res.send(dr)
+    } catch (e) {
+        res.status(400).send(e)
+    }
+}
+
+module.exports.update = update
+
+const remove = async (req, res) => {
+    const dr = await model.findById(req.params.id)
+
+    if (req.role == 'customer' && req.uid != dr.cid) {
+        return res.status(401).send({ error: 'Access denied' })
+    }
+
+    try {
+        await dr.remove()
+        res.send(dr)
+    } catch (e) {
+        res.status(404).send(e)
+    }
+}
+
+module.exports.remove = remove
