@@ -1096,20 +1096,6 @@
                         }
                       }
                     },
-                    "stockimages" : {
-                      "type" : "array",
-                      "items" : {
-                        "type" : "object",
-                        "properties" : {
-                          "name" : {
-                            "type" : "string"
-                          },
-                          "link" : {
-                            "type" : "string"
-                          }
-                        }
-                      }
-                    },
                     "brand" : {
                       "$ref" : "#/components/schemas/Brand"
                     },
@@ -1180,7 +1166,7 @@
     "/designrequests/{id}" : {
       "get" : {
         "tags" : [ "Design Requests" ],
-        "summary" : "Create design request",
+        "summary" : "Fetch specific design request",
         "parameters" : [ {
           "in" : "path",
           "name" : "id",
@@ -1214,7 +1200,58 @@
                         }
                       }
                     },
-                    "stockimages" : {
+                    "brand" : {
+                      "$ref" : "#/components/schemas/Brand"
+                    },
+                    "designer" : {
+                      "$ref" : "#/components/schemas/Designer"
+                    },
+                    "cid" : {
+                      "type" : "string"
+                    },
+                    "_id" : {
+                      "type" : "string"
+                    },
+                    "uid" : {
+                      "type" : "string"
+                    },
+                    "createdAt" : {
+                      "type" : "string",
+                      "format" : "date-time"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch" : {
+        "tags" : [ "Design Requests" ],
+        "summary" : "Update design request",
+        "parameters" : [ {
+          "in" : "path",
+          "required" : true,
+          "name" : "id",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "$ref" : "#/components/requestBodies/DesignRequest"
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "allOf" : [ {
+                    "$ref" : "#/components/schemas/DesignRequest"
+                  } ],
+                  "type" : "object",
+                  "properties" : {
+                    "assets" : {
                       "type" : "array",
                       "items" : {
                         "type" : "object",
@@ -1234,6 +1271,48 @@
                     "designer" : {
                       "$ref" : "#/components/schemas/Designer"
                     },
+                    "cid" : {
+                      "type" : "string"
+                    },
+                    "_id" : {
+                      "type" : "string"
+                    },
+                    "uid" : {
+                      "type" : "string"
+                    },
+                    "createdAt" : {
+                      "type" : "string",
+                      "format" : "date-time"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "Design Requests" ],
+        "summary" : "Delete design request",
+        "parameters" : [ {
+          "in" : "path",
+          "required" : true,
+          "name" : "id",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "allOf" : [ {
+                    "$ref" : "#/components/schemas/DesignRequest"
+                  } ],
+                  "type" : "object",
+                  "properties" : {
                     "cid" : {
                       "type" : "string"
                     },
