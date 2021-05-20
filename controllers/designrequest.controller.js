@@ -1,4 +1,6 @@
 const validator = require('validator');
+var ObjectId = require('mongoose').Types.ObjectId;
+
 const CONFIG = require('../config/config');
 
 const model = require('../models/designrequest.model')
@@ -9,6 +11,10 @@ const add = async (req, res) => {
     var assets = []
     if (req.files.assets) {
         assets = req.files.assets.map(asset => asset.key)
+    }
+
+    if(!ObjectId.isValid(req.body.brand) || !ObjectId.isValid(req.body.designer)) {
+        return res.status(400).send({error: "Invalid ref. id"})
     }
 
     const dr = new model({
@@ -33,6 +39,7 @@ module.exports.add = add
 
 const read = async (req, res) => {
     if (req.role == 'customer') {
+
         const dr = await model.find({ cid: req.uid })
             .populate('brand')
             .populate('designer')
