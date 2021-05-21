@@ -4,7 +4,7 @@ const model = require('../models/customer.model')
 const brandModel = require('../models/brand.model')
 
 const add = async (req, res) => {
-    const allowedFields = ["name", "email", "phone"]
+    const allowedFields = ["name", "email", "phone", "company", "address"]
     const values = Object.keys(req.body)
 
     const validOperation = values.every((elem) => allowedFields.includes(elem))
@@ -44,7 +44,7 @@ module.exports.read = read
 
 const update = async (req, res) => {
     var allowedFields = []
-    req.role == 'owner' ? allowedFields = ["name", "email", "phone", "designers"] : allowedFields = ["name", "email", "phone"]
+    req.role == 'owner' ? allowedFields = ["name", "email", "phone", "designers", "company", "address"] : allowedFields = ["name", "email", "phone", "company", "address"]
     const updates = Object.keys(req.body)
     const customer = await model.findOne({ uid: req.params.id })
 
