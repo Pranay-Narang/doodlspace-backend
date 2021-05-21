@@ -25,7 +25,7 @@ const add = async (req, res) => {
         await customer.save()
         res.status(201).send(customer)
     } catch (e) {
-        res.status(500).send(e)
+        res.status(400).send(e)
     }
 }
 
