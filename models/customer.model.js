@@ -30,7 +30,7 @@ const companySchema = new mongoose.Schema({
     },
     employees: {
         type: String,
-        enum: [ 'Only me', '2-20', '21-50', '51-100', '100+' ],
+        enum: ['Only me', '2-20', '21-50', '51-100', '100+'],
         required: true
     },
     industry: {
@@ -54,8 +54,8 @@ const companySchema = new mongoose.Schema({
         type: String
     },
     designpreferences: {
-        type: String,
-        enum: [ 'Social Media Creatives', 'Print Collaterals', 'Outdoor Creatives', 'Website banners', 'graphics', 'Merchandise', 'Infographics' ]
+        type: [String],
+        enum: ['Social Media Creatives', 'Print Collaterals', 'Outdoor Creatives', 'Website banners', 'graphics', 'Merchandise', 'Infographics']
     }
 })
 
