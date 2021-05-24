@@ -50,6 +50,6 @@ router.patch('/brands/:id', auth({ hasRole: ['customer', 'owner'] }), upload.fie
     { name: 'stockimages', maxCount: 10 },
     { name: 'logo', maxCount: 1 }
 ]), controller.update)
-router.delete('/brands/:id', auth({ hasRole: ['owner'] }), controller.remove)
+router.delete('/brands/:id', auth({ hasRole: ['customer', 'owner'] }), controller.remove)
 
 module.exports = router
