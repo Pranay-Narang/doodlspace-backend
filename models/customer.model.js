@@ -46,6 +46,9 @@ const companySchema = new mongoose.Schema({
         facebook: {
             type: String
         },
+        twitter: {
+            type: String
+        },
         website: {
             type: String
         }
