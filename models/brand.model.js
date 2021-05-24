@@ -42,6 +42,8 @@ const schema = new mongoose.Schema(
         assets: Array,
         stockimages: Array,
         stockimagelinks: Array,
+        inspirationallinks: [String],
+        targetaudience: [String],
         fonts: [fontSchema]
     }
 )
