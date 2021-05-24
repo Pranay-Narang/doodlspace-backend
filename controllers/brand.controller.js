@@ -64,7 +64,7 @@ const readOne = async (req, res) => {
 module.exports.readOne = readOne
 
 const update = async (req, res) => {
-    const allowedFields = ["name", "description", "colors", "social", "assets", "stockimages"]
+    const allowedFields = ["name", "description", "colors", "social", "assets", "stockimages", "inspirationallinks", "targetaudience", "status"]
     const updates = Object.keys(req.body)
     const brand = await model.findById(req.params.id)
     var assets = []
