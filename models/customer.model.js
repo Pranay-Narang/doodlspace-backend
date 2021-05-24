@@ -55,7 +55,6 @@ const companySchema = new mongoose.Schema({
     },
     designpreferences: {
         type: [String],
-        enum: ['Social Media Creatives', 'Print Collaterals', 'Outdoor Creatives', 'Website banners', 'graphics', 'Merchandise', 'Infographics']
     }
 })
 
