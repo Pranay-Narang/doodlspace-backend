@@ -42,7 +42,12 @@ const schema = new mongoose.Schema(
         stockimagelinks: Array,
         inspirationallinks: [String],
         targetaudience: [String],
-        fonts: [fontSchema]
+        fonts: [fontSchema],
+        status: {
+            type: String,
+            enum: ["active", "inactive"],
+            default: "active"
+        }
     }
 )
 
