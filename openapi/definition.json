@@ -1457,6 +1457,9 @@
                   "facebook" : {
                     "type" : "string"
                   },
+                  "twitter" : {
+                    "type" : "string"
+                  },
                   "website" : {
                     "type" : "string"
                   }
@@ -1468,8 +1471,7 @@
               "designpreferences" : {
                 "type" : "array",
                 "items" : {
-                  "type" : "string",
-                  "enum" : [ "Social Media Creatives", "Print Collaterals", "Outdoor Creatives", "Website banners, graphics", "Merchandise", "Infographics" ]
+                  "type" : "string"
                 }
               }
             }
@@ -1486,16 +1488,16 @@
             "type" : "string"
           },
           "social" : {
-            "type" : "object",
-            "properties" : {
-              "instagram" : {
-                "type" : "string"
-              },
-              "facebook" : {
-                "type" : "string"
-              },
-              "website" : {
-                "type" : "string"
+            "type" : "array",
+            "items" : {
+              "type" : "object",
+              "properties" : {
+                "name" : {
+                  "type" : "string"
+                },
+                "URL" : {
+                  "type" : "string"
+                }
               }
             }
           },
@@ -1551,6 +1553,22 @@
             "items" : {
               "type" : "string"
             }
+          },
+          "inspirationallinks" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "targetaudience" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "status" : {
+            "type" : "string",
+            "enum" : [ "active", "inactive" ]
           }
         }
       },
