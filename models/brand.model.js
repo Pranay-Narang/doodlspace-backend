@@ -12,10 +12,8 @@ const s3 = new S3({
 });
 
 const socialSchema = new mongoose.Schema({
-    instagram: String,
-    facebook: String,
-    linkedin: String,
-    website: String
+    name: String,
+    URL: String
 })
 
 const fontSchema = new mongoose.Schema({
@@ -37,7 +35,7 @@ const schema = new mongoose.Schema(
         },
         description: String,
         colors: Array,
-        social: socialSchema,
+        social: [socialSchema],
         logo: Array,
         assets: Array,
         stockimages: Array,
