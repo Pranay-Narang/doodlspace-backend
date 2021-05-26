@@ -8,6 +8,7 @@ const add = async (req, res) => {
     var assets = []
     var stockimages = []
     var logo = []
+    var storedfonts = []
     
     if (req.files.assets) {
         assets = req.files.assets.map(asset => asset.key)
@@ -18,19 +19,24 @@ const add = async (req, res) => {
     if(req.files.logo) {
         logo = req.files.logo.map(e => e.key)
     }
+    if(req.files.storedfonts) {
+        storedfonts = req.files.storedfonts.map(e => e.key)
+    }
 
     const brand = new model({
         cid: req.uid,
         ...req.body,
         assets,
         stockimages,
-        logo
+        logo,
+        storedfonts
     })
     try {
         await brand.save()
         brand['assets'] = await preSigner(brand, 'assets')
         brand['stockimages'] = await preSigner(brand, 'stockimages')
         brand['logo'] = await preSigner(brand, 'logo')
+        brand['storedfonts'] = await preSigner(brand, 'storedfonts')
         res.status(201).send(brand)
     } catch (e) {
         res.status(500).send(e)

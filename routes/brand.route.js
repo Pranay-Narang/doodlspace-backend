@@ -30,7 +30,7 @@ const upload = multer({
         }
     }),
     fileFilter(req, file, cb) {
-        if (!file.originalname.match(/\.(png|jpg)$/)) {
+        if (!file.originalname.match(/\.(png|jpg|ttf)$/)) {
             return cb(new Error('Please upload a PNG/JPG'))
         }
 
@@ -41,14 +41,16 @@ const upload = multer({
 router.post('/brands', auth({ hasRole: ['customer'] }), upload.fields([
     { name: 'assets', maxCount: 10 },
     { name: 'stockimages', maxCount: 10 },
-    { name: 'logo', maxCount: 1 }
+    { name: 'logo', maxCount: 1 },
+    { name: 'storedfonts', maxCount: 10}
 ]), controller.add)
 router.get('/brands', auth({ hasRole: ['owner'] }), controller.read)
 router.get('/brands/:id', auth({ hasRole: ['owner', 'designer', 'customer'] }), controller.readOne)
 router.patch('/brands/:id', auth({ hasRole: ['customer', 'owner'] }), upload.fields([
     { name: 'assets', maxCount: 10 },
     { name: 'stockimages', maxCount: 10 },
-    { name: 'logo', maxCount: 1 }
+    { name: 'logo', maxCount: 1 },
+    { name: 'storedfonts', maxCount: 10}
 ]), controller.update)
 router.delete('/brands/:id', auth({ hasRole: ['customer', 'owner'] }), controller.remove)
 

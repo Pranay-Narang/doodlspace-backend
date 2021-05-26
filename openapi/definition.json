@@ -841,6 +841,20 @@
                         }
                       }
                     },
+                    "storedfonts" : {
+                      "type" : "array",
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "name" : {
+                            "type" : "string"
+                          },
+                          "link" : {
+                            "type" : "string"
+                          }
+                        }
+                      }
+                    },
                     "_id" : {
                       "type" : "string"
                     },
@@ -952,6 +966,20 @@
                       }
                     },
                     "logo" : {
+                      "type" : "array",
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "name" : {
+                            "type" : "string"
+                          },
+                          "link" : {
+                            "type" : "string"
+                          }
+                        }
+                      }
+                    },
+                    "storedfonts" : {
                       "type" : "array",
                       "items" : {
                         "type" : "object",
@@ -1506,9 +1534,6 @@
             "items" : {
               "type" : "object",
               "properties" : {
-                "name" : {
-                  "type" : "string"
-                },
                 "family" : {
                   "type" : "string"
                 },
@@ -1519,6 +1544,12 @@
                   "type" : "string"
                 }
               }
+            }
+          },
+          "storedfonts" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
             }
           },
           "colors" : {

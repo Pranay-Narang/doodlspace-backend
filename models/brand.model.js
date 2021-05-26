@@ -17,7 +17,6 @@ const socialSchema = new mongoose.Schema({
 })
 
 const fontSchema = new mongoose.Schema({
-    name: String,
     family: String,
     variant: String,
     URL: String
@@ -43,6 +42,7 @@ const schema = new mongoose.Schema(
         inspirationallinks: [String],
         targetaudience: [String],
         fonts: [fontSchema],
+        storedfonts: [],
         status: {
             type: String,
             enum: ["active", "inactive"],
