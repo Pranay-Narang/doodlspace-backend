@@ -9,17 +9,17 @@ const add = async (req, res) => {
     var stockimages = []
     var logo = []
     var storedfonts = []
-    
+
     if (req.files.assets) {
         assets = req.files.assets.map(asset => asset.key)
     }
     if (req.files.stockimages) {
         stockimages = req.files.stockimages.map(image => image.key)
     }
-    if(req.files.logo) {
+    if (req.files.logo) {
         logo = req.files.logo.map(e => e.key)
     }
-    if(req.files.storedfonts) {
+    if (req.files.storedfonts) {
         storedfonts = req.files.storedfonts.map(e => e.key)
     }
 
@@ -70,11 +70,16 @@ const readOne = async (req, res) => {
 module.exports.readOne = readOne
 
 const update = async (req, res) => {
-    const allowedFields = ["name", "description", "colors", "social", "assets", "stockimages", "inspirationallinks", "targetaudience", "status"]
+    const allowedFields = ["name", "description", "colors", "social", "assets", 
+                            "stockimages", "inspirationallinks", "targetaudience",
+                            "logo", "storedfonts", "fonts", "status"]
     const updates = Object.keys(req.body)
     const brand = await model.findById(req.params.id)
+
     var assets = []
     var stockimages = []
+    var logo = []
+    var storedfonts = []
 
     const validOperation = updates.every((elem) => allowedFields.includes(elem))
     if (!validOperation) {
@@ -87,11 +92,21 @@ const update = async (req, res) => {
     if (req.files.stockimages) {
         stockimages = req.files.stockimages.map(image => image.key)
     }
+    if (req.files.logo) {
+        logo = req.files.logo.map(e => e.key)
+    }
+    if (req.files.storedfonts) {
+        storedfonts = req.files.storedfonts.map(e => e.key)
+    }
 
     try {
         updates.forEach((elem) => brand[elem] = req.body[elem])
+
         brand['assets'] = brand['assets'].concat(assets)
         brand['stockimages'] = brand['stockimages'].concat(stockimages)
+        brand['logo'] = brand['logo'].concat(logo)
+        brand['storedfonts'] = brand['storedfonts'].concat(storedfonts)
+
         await brand.save()
         res.send(brand)
     } catch (e) {
