@@ -1,0 +1,47 @@
+version: "3.9"
+
+networks: 
+  doodlspace:
+    external: true
+
+services:
+  app:
+    build:
+      context: .
+    ports:
+      - '3000:3000'
+    environment:
+      - DB_URL=db
+      - FIREBASE_ACCOUNT_TYPE
+      - FIREBASE_PROJECT_ID
+      - FIREBASE_PRIVATE_KEY_ID
+      - FIREBASE_PRIVATE_KEY
+      - FIREBASE_CLIENT_EMAIL
+      - FIREBASE_CLIENT_ID
+      - FIREBASE_AUTH_URI
+      - FIREBASE_TOKEN_URI
+      - FIREBASE_AUTH_PROVIDER_x509_CERT_URL
+      - FIREBASE_CLIENT_x509_CERT_URL
+      - AWS_ACCESS_KEY_ID
+      - AWS_SECRET_ACCESS_KEY
+      - AWS_S3_BUCKET
+      - AWS_S3_BUCKET_ENDPOINT
+    depends_on:
+      - db
+    networks: 
+      - doodlspace
+  
+  db:
+    image: mongo
+    volumes:
+      - mongo-data:/data/db
+    labels:
+      - traefik.enable=false
+    environment:
+      MONGO_INITDB_ROOT_USERNAME:
+      MONGO_INITDB_ROOT_PASSWORD:
+    networks: 
+      - doodlspace
+    
+volumes:
+  mongo-data:
