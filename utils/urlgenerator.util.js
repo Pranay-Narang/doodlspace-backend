@@ -18,7 +18,7 @@ const generator = async (object, subObject) => {
             Key: value,
             Expires: 60 * 5
         };
-        return { name: value.split('\\').pop().split('/').pop(), link: s3.getSignedUrl('getObject', params) }
+        return { name: value, link: s3.getSignedUrl('getObject', params) }
     })
     return objectURLs
 }
