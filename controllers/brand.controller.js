@@ -61,6 +61,8 @@ const readOne = async (req, res) => {
         const brand = await model.findById(req.params.id)
         brand['assets'] = await preSigner(brand, 'assets')
         brand['stockimages'] = await preSigner(brand, 'stockimages')
+        brand['logo'] = await preSigner(brand, 'logo')
+        brand['storedfonts'] = await preSigner(brand, 'storedfonts')
         res.send(brand)
     } catch (e) {
         res.status(404).send(e)
