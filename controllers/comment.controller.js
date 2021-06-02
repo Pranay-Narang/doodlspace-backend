@@ -8,7 +8,6 @@ const model = require('../models/comment.model')
 const preSigner = require('../utils/urlgenerator.util')
 
 const add = async (req, res) => {
-
     const allowedFields = ["value", "attachments"]
     const updates = Object.keys(req.body)
 
@@ -53,10 +52,18 @@ module.exports.add = add
 const read = async (req, res) => {
     if (req.role == 'customer') {
         const publicComments = await model.find({ designrequest: req.params.id, private: false }).lean().populate('user', 'name')
+        await Promise.all(publicComments.map(async elem => {
+            elem['attachments'] = await preSigner(elem, 'attachments')
+            return elem
+        }))
         return res.send(publicComments)
     }
 
     const comments = await model.find({ designrequest: req.params.id }).lean().populate('user', 'name')
+    await Promise.all(comments.map(async elem => {
+        elem['attachments'] = await preSigner(elem, 'attachments')
+        return elem
+    }))
     return res.send(comments)
 }
 
