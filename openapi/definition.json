@@ -18,6 +18,8 @@
   }, {
     "name" : "Design Requests"
   }, {
+    "name" : "Design Request Comments"
+  }, {
     "name" : "Scheduled Design Requests"
   } ],
   "paths" : {
@@ -1161,29 +1163,32 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "allOf" : [ {
-                    "$ref" : "#/components/schemas/DesignRequest"
-                  } ],
-                  "type" : "object",
-                  "properties" : {
-                    "brand" : {
-                      "$ref" : "#/components/schemas/Brand"
-                    },
-                    "designer" : {
-                      "$ref" : "#/components/schemas/Designer"
-                    },
-                    "cid" : {
-                      "type" : "string"
-                    },
-                    "_id" : {
-                      "type" : "string"
-                    },
-                    "uid" : {
-                      "type" : "string"
-                    },
-                    "createdAt" : {
-                      "type" : "string",
-                      "format" : "date-time"
+                  "type" : "array",
+                  "items" : {
+                    "allOf" : [ {
+                      "$ref" : "#/components/schemas/DesignRequest"
+                    } ],
+                    "type" : "object",
+                    "properties" : {
+                      "brand" : {
+                        "$ref" : "#/components/schemas/Brand"
+                      },
+                      "designer" : {
+                        "$ref" : "#/components/schemas/Designer"
+                      },
+                      "cid" : {
+                        "type" : "string"
+                      },
+                      "_id" : {
+                        "type" : "string"
+                      },
+                      "uid" : {
+                        "type" : "string"
+                      },
+                      "createdAt" : {
+                        "type" : "string",
+                        "format" : "date-time"
+                      }
                     }
                   }
                 }
@@ -1364,6 +1369,90 @@
         }
       }
     },
+    "/designrequests/{id}/comments" : {
+      "post" : {
+        "tags" : [ "Design Request Comments" ],
+        "summary" : "Add comment on DR",
+        "parameters" : [ {
+          "in" : "path",
+          "required" : true,
+          "name" : "id",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "$ref" : "#/components/requestBodies/Comment"
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "allOf" : [ {
+                    "$ref" : "#/components/schemas/Comment"
+                  } ],
+                  "type" : "object",
+                  "properties" : {
+                    "uid" : {
+                      "type" : "string"
+                    },
+                    "role" : {
+                      "type" : "string"
+                    },
+                    "designrequest" : {
+                      "type" : "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get" : {
+        "tags" : [ "Design Request Comments" ],
+        "summary" : "Fetch comments on DR",
+        "parameters" : [ {
+          "in" : "path",
+          "required" : true,
+          "name" : "id",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "Created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "allOf" : [ {
+                      "$ref" : "#/components/schemas/Comment"
+                    } ],
+                    "type" : "object",
+                    "properties" : {
+                      "uid" : {
+                        "type" : "string"
+                      },
+                      "role" : {
+                        "type" : "string"
+                      },
+                      "designrequest" : {
+                        "type" : "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/scheduled/designrequests" : {
       "get" : {
         "tags" : [ "Scheduled Design Requests" ],
@@ -1374,29 +1463,32 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "allOf" : [ {
-                    "$ref" : "#/components/schemas/DesignRequest"
-                  } ],
-                  "type" : "object",
-                  "properties" : {
-                    "brand" : {
-                      "$ref" : "#/components/schemas/Brand"
-                    },
-                    "designer" : {
-                      "$ref" : "#/components/schemas/Designer"
-                    },
-                    "cid" : {
-                      "type" : "string"
-                    },
-                    "_id" : {
-                      "type" : "string"
-                    },
-                    "uid" : {
-                      "type" : "string"
-                    },
-                    "createdAt" : {
-                      "type" : "string",
-                      "format" : "date-time"
+                  "type" : "array",
+                  "items" : {
+                    "allOf" : [ {
+                      "$ref" : "#/components/schemas/DesignRequest"
+                    } ],
+                    "type" : "object",
+                    "properties" : {
+                      "brand" : {
+                        "$ref" : "#/components/schemas/Brand"
+                      },
+                      "designer" : {
+                        "$ref" : "#/components/schemas/Designer"
+                      },
+                      "cid" : {
+                        "type" : "string"
+                      },
+                      "_id" : {
+                        "type" : "string"
+                      },
+                      "uid" : {
+                        "type" : "string"
+                      },
+                      "createdAt" : {
+                        "type" : "string",
+                        "format" : "date-time"
+                      }
                     }
                   }
                 }
@@ -1926,6 +2018,24 @@
             }
           }
         }
+      },
+      "Comment" : {
+        "type" : "object",
+        "properties" : {
+          "private" : {
+            "type" : "boolean",
+            "default" : false
+          },
+          "value" : {
+            "type" : "string"
+          },
+          "attachments" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }
       }
     },
     "securitySchemes" : {
@@ -2017,6 +2127,27 @@
                   }
                 },
                 "stockimages" : {
+                  "type" : "array",
+                  "items" : {
+                    "type" : "string",
+                    "format" : "binary"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "Comment" : {
+        "content" : {
+          "multipart/form-data" : {
+            "schema" : {
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/Comment"
+              } ],
+              "type" : "object",
+              "properties" : {
+                "attachments" : {
                   "type" : "array",
                   "items" : {
                     "type" : "string",
