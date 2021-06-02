@@ -10,7 +10,7 @@ const s3 = new S3({
 });
 
 const generator = async (object, subObject) => {
-    const values = object[subObject].toObject()
+    const values = object[subObject]
 
     const objectURLs = values.map(value => {
         const params = {
