@@ -83,3 +83,6 @@ typings/
 # Temporary folders
 tmp/
 temp/
+
+# Explicit role promoter
+promote.js
