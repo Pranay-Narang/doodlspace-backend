@@ -5,6 +5,8 @@ networks:
     external: true
   internal:
     external: false
+  doodlspace:
+    external: true
 
 services:
   app:
@@ -48,6 +50,7 @@ services:
       MONGO_INITDB_ROOT_PASSWORD:
     networks:
       - internal
+      - doodlspace
     
 volumes:
   mongo-data:
