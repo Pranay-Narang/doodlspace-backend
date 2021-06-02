@@ -17,6 +17,8 @@
     "name" : "Brands"
   }, {
     "name" : "Design Requests"
+  }, {
+    "name" : "Scheduled Design Requests"
   } ],
   "paths" : {
     "/owners" : {
@@ -1322,6 +1324,281 @@
       "delete" : {
         "tags" : [ "Design Requests" ],
         "summary" : "Delete design request",
+        "parameters" : [ {
+          "in" : "path",
+          "required" : true,
+          "name" : "id",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "allOf" : [ {
+                    "$ref" : "#/components/schemas/DesignRequest"
+                  } ],
+                  "type" : "object",
+                  "properties" : {
+                    "cid" : {
+                      "type" : "string"
+                    },
+                    "_id" : {
+                      "type" : "string"
+                    },
+                    "uid" : {
+                      "type" : "string"
+                    },
+                    "createdAt" : {
+                      "type" : "string",
+                      "format" : "date-time"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/scheduled/designrequests" : {
+      "get" : {
+        "tags" : [ "Scheduled Design Requests" ],
+        "summary" : "View scheduled design requests",
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "allOf" : [ {
+                    "$ref" : "#/components/schemas/DesignRequest"
+                  } ],
+                  "type" : "object",
+                  "properties" : {
+                    "brand" : {
+                      "$ref" : "#/components/schemas/Brand"
+                    },
+                    "designer" : {
+                      "$ref" : "#/components/schemas/Designer"
+                    },
+                    "cid" : {
+                      "type" : "string"
+                    },
+                    "_id" : {
+                      "type" : "string"
+                    },
+                    "uid" : {
+                      "type" : "string"
+                    },
+                    "createdAt" : {
+                      "type" : "string",
+                      "format" : "date-time"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/scheduled/designrequests/{id}" : {
+      "post" : {
+        "parameters" : [ {
+          "in" : "path",
+          "required" : true,
+          "name" : "id",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "tags" : [ "Scheduled Design Requests" ],
+        "summary" : "Force design request without scheduling",
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "allOf" : [ {
+                    "$ref" : "#/components/schemas/DesignRequest"
+                  } ],
+                  "type" : "object",
+                  "properties" : {
+                    "assets" : {
+                      "type" : "array",
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "name" : {
+                            "type" : "string"
+                          },
+                          "link" : {
+                            "type" : "string"
+                          }
+                        }
+                      }
+                    },
+                    "brand" : {
+                      "$ref" : "#/components/schemas/Brand"
+                    },
+                    "designer" : {
+                      "$ref" : "#/components/schemas/Designer"
+                    },
+                    "cid" : {
+                      "type" : "string"
+                    },
+                    "_id" : {
+                      "type" : "string"
+                    },
+                    "uid" : {
+                      "type" : "string"
+                    },
+                    "createdAt" : {
+                      "type" : "string",
+                      "format" : "date-time"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get" : {
+        "parameters" : [ {
+          "in" : "path",
+          "required" : true,
+          "name" : "id",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "tags" : [ "Scheduled Design Requests" ],
+        "summary" : "View scheduled design request",
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "allOf" : [ {
+                    "$ref" : "#/components/schemas/DesignRequest"
+                  } ],
+                  "type" : "object",
+                  "properties" : {
+                    "assets" : {
+                      "type" : "array",
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "name" : {
+                            "type" : "string"
+                          },
+                          "link" : {
+                            "type" : "string"
+                          }
+                        }
+                      }
+                    },
+                    "brand" : {
+                      "$ref" : "#/components/schemas/Brand"
+                    },
+                    "designer" : {
+                      "$ref" : "#/components/schemas/Designer"
+                    },
+                    "cid" : {
+                      "type" : "string"
+                    },
+                    "_id" : {
+                      "type" : "string"
+                    },
+                    "uid" : {
+                      "type" : "string"
+                    },
+                    "createdAt" : {
+                      "type" : "string",
+                      "format" : "date-time"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch" : {
+        "tags" : [ "Scheduled Design Requests" ],
+        "summary" : "Update scheduled design request",
+        "parameters" : [ {
+          "in" : "path",
+          "required" : true,
+          "name" : "id",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "$ref" : "#/components/requestBodies/DesignRequest"
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "allOf" : [ {
+                    "$ref" : "#/components/schemas/DesignRequest"
+                  } ],
+                  "type" : "object",
+                  "properties" : {
+                    "assets" : {
+                      "type" : "array",
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "name" : {
+                            "type" : "string"
+                          },
+                          "link" : {
+                            "type" : "string"
+                          }
+                        }
+                      }
+                    },
+                    "brand" : {
+                      "$ref" : "#/components/schemas/Brand"
+                    },
+                    "designer" : {
+                      "$ref" : "#/components/schemas/Designer"
+                    },
+                    "cid" : {
+                      "type" : "string"
+                    },
+                    "_id" : {
+                      "type" : "string"
+                    },
+                    "uid" : {
+                      "type" : "string"
+                    },
+                    "createdAt" : {
+                      "type" : "string",
+                      "format" : "date-time"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "Scheduled Design Requests" ],
+        "summary" : "Delete scheduled design request",
         "parameters" : [ {
           "in" : "path",
           "required" : true,

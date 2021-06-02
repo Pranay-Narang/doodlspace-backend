@@ -36,5 +36,6 @@ const schema = new mongoose.Schema({
 })
 
 const DesignRequest = mongoose.model('DesignRequest', schema)
+const ScheduledDesignRequest = mongoose.model('ScheduledDesignRequest', schema)
 
-module.exports = DesignRequest
+module.exports = {DesignRequest, ScheduledDesignRequest}
