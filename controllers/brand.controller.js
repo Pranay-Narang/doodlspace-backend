@@ -48,8 +48,16 @@ module.exports.add = add
 const read = async (req, res) => {
     try {
         const brands = req.query.cid ? await model.find({ cid: req.query.cid }) : await model.find()
+        await Promise.all(brands.map(async elem => {
+            elem['assets'] = await preSigner(elem, 'assets')
+            elem['stockimages'] = await preSigner(elem, 'stockimages')
+            elem['logo'] = await preSigner(elem, 'logo')
+            elem['storedfonts'] = await preSigner(elem, 'storedfonts')
+            return elem
+        }))
         res.send(brands)
     } catch (e) {
+        console.log(e)
         res.status(404).send(e)
     }
 }
@@ -72,9 +80,9 @@ const readOne = async (req, res) => {
 module.exports.readOne = readOne
 
 const update = async (req, res) => {
-    const allowedFields = ["name", "description", "colors", "social", "assets", 
-                            "stockimages", "inspirationallinks", "targetaudience",
-                            "logo", "storedfonts", "fonts", "status"]
+    const allowedFields = ["name", "description", "colors", "social", "assets",
+        "stockimages", "inspirationallinks", "targetaudience",
+        "logo", "storedfonts", "fonts", "status"]
     const updates = Object.keys(req.body)
     const brand = await model.findById(req.params.id)
 
