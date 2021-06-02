@@ -39,8 +39,15 @@ const add = async (req, res) => {
 module.exports.add = add
 
 const addScheduled = async (req, res) => {
+    if (!ObjectId.isValid(req.params.id)) {
+        return res.status(400).send({ error: "Invalid ref. id" })
+    }
+    
     const scheduledDR = await scheduledDRModel.findOne({_id: req.params.id})
 
+    if(!scheduledDR) {
+        return res.status(404).send({})
+    }
     var scheduledDRJSON = scheduledDR.toJSON()
 
     delete scheduledDRJSON._id
