@@ -13,16 +13,20 @@ const schema = new mongoose.Schema({
     formats: Array,
     native: String,
     sizes: Array,
-    designer: {
-        type: String,
-        ref: 'Designer'
-    },
+    did: String,
     assets: Array,
     stockimages: Array
 }, {
     toObject: { virtuals: true },
     toJSON: { virtuals: true },
     timestamps: true
+})
+
+schema.virtual('designer', {
+    ref: 'Designer',
+    localField: 'did',
+    foreignField: 'uid',
+    justOne: true
 })
 
 const DesignRequest = mongoose.model('DesignRequest', schema)

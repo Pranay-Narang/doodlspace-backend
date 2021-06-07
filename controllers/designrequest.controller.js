@@ -14,7 +14,7 @@ const add = async (req, res) => {
         assets = req.files.assets.map(asset => asset.key)
     }
 
-    if (!ObjectId.isValid(req.body.brand) || !ObjectId.isValid(req.body.designer)) {
+    if (!ObjectId.isValid(req.body.brand)) {
         return res.status(400).send({ error: "Invalid ref. id" })
     }
 
