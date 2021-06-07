@@ -42,10 +42,10 @@ const addScheduled = async (req, res) => {
     if (!ObjectId.isValid(req.params.id)) {
         return res.status(400).send({ error: "Invalid ref. id" })
     }
-    
-    const scheduledDR = await scheduledDRModel.findOne({_id: req.params.id})
 
-    if(!scheduledDR) {
+    const scheduledDR = await scheduledDRModel.findOne({ _id: req.params.id })
+
+    if (!scheduledDR) {
         return res.status(404).send({})
     }
     var scheduledDRJSON = scheduledDR.toJSON()
@@ -54,7 +54,7 @@ const addScheduled = async (req, res) => {
     delete scheduledDRJSON.id
 
     const dr = new model(scheduledDRJSON)
-    
+
     try {
         await dr.save()
 
@@ -75,6 +75,13 @@ module.exports.addScheduled = addScheduled
 const read = async (req, res) => {
     if (req.role == 'customer') {
         const dr = await model.find({ cid: req.uid })
+            .populate('brand')
+            .populate('designer')
+        return res.send(dr)
+    }
+
+    if (req.role == 'designer') {
+        const dr = await model.find({ did: req.uid })
             .populate('brand')
             .populate('designer')
         return res.send(dr)
