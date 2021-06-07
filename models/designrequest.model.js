@@ -15,7 +15,14 @@ const schema = new mongoose.Schema({
     sizes: Array,
     did: String,
     assets: Array,
-    stockimages: Array
+    stockimages: Array,
+    status: {
+        type: String,
+        enum: ["in-queue", "in-progress", "qa-requested", "qa-rejected",
+            "qa-customer-partial", "qa-customer-full", "qa-customer-partial-rejected",
+            "qa-customer-full-rejected", "done"],
+        default: "in-queue"
+    }
 }, {
     toObject: { virtuals: true },
     toJSON: { virtuals: true },
@@ -32,4 +39,4 @@ schema.virtual('designer', {
 const DesignRequest = mongoose.model('DesignRequest', schema)
 const ScheduledDesignRequest = mongoose.model('ScheduledDesignRequest', schema)
 
-module.exports = {DesignRequest, ScheduledDesignRequest}
+module.exports = { DesignRequest, ScheduledDesignRequest }
