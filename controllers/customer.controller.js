@@ -3,6 +3,8 @@ const admin = require('firebase-admin')
 const model = require('../models/customer.model')
 const brandModel = require('../models/brand.model')
 
+const preSigner = require('../utils/urlgenerator.util')
+
 const add = async (req, res) => {
     const allowedFields = ["name", "email", "phone", "company", "address"]
     const values = Object.keys(req.body)
@@ -80,6 +82,13 @@ module.exports.remove = remove
 const readBrands = async (req, res) => {
     try {
         const brands = await brandModel.find({ cid: req.params.id })
+        await Promise.all(brands.map(async elem => {
+            elem['assets'] = await preSigner(elem, 'assets')
+            elem['stockimages'] = await preSigner(elem, 'stockimages')
+            elem['logo'] = await preSigner(elem, 'logo')
+            elem['storedfonts'] = await preSigner(elem, 'storedfonts')
+            return elem
+        }))
         res.send(brands)
     } catch (e) {
         res.status(404).send(e)
