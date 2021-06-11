@@ -347,50 +347,6 @@
         }
       }
     },
-    "/designers/{id}/customers" : {
-      "get" : {
-        "tags" : [ "Designers" ],
-        "summary" : "Fetch customers for the designer",
-        "parameters" : [ {
-          "in" : "path",
-          "name" : "id",
-          "required" : true,
-          "schema" : {
-            "type" : "string"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "Success",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "type" : "array",
-                  "items" : {
-                    "allOf" : [ {
-                      "$ref" : "#/components/schemas/Customer"
-                    } ],
-                    "type" : "object",
-                    "properties" : {
-                      "_id" : {
-                        "type" : "string"
-                      },
-                      "uid" : {
-                        "type" : "string"
-                      },
-                      "createdAt" : {
-                        "type" : "string",
-                        "format" : "date-time"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/supervisors" : {
       "post" : {
         "tags" : [ "Supervisors" ],
@@ -544,50 +500,6 @@
         }
       }
     },
-    "/supervisors/{id}/designers" : {
-      "get" : {
-        "tags" : [ "Supervisors" ],
-        "summary" : "Fetch designers for the supervisor",
-        "parameters" : [ {
-          "in" : "path",
-          "name" : "id",
-          "required" : true,
-          "schema" : {
-            "type" : "string"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "Success",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "type" : "array",
-                  "items" : {
-                    "allOf" : [ {
-                      "$ref" : "#/components/schemas/Designer"
-                    } ],
-                    "type" : "object",
-                    "properties" : {
-                      "_id" : {
-                        "type" : "string"
-                      },
-                      "uid" : {
-                        "type" : "string"
-                      },
-                      "createdAt" : {
-                        "type" : "string",
-                        "format" : "date-time"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/customers" : {
       "post" : {
         "tags" : [ "Customers" ],
@@ -641,6 +553,14 @@
                     "properties" : {
                       "_id" : {
                         "type" : "string"
+                      },
+                      "designers" : {
+                        "type" : "array",
+                        "items" : {
+                          "allOf" : [ {
+                            "$ref" : "#/components/schemas/Designer"
+                          } ]
+                        }
                       },
                       "uid" : {
                         "type" : "string"
@@ -769,9 +689,6 @@
                       "_id" : {
                         "type" : "string"
                       },
-                      "uid" : {
-                        "type" : "string"
-                      },
                       "createdAt" : {
                         "type" : "string",
                         "format" : "date-time"
@@ -862,9 +779,6 @@
                     "_id" : {
                       "type" : "string"
                     },
-                    "uid" : {
-                      "type" : "string"
-                    },
                     "createdAt" : {
                       "type" : "string",
                       "format" : "date-time"
@@ -899,10 +813,63 @@
                     } ],
                     "type" : "object",
                     "properties" : {
-                      "_id" : {
-                        "type" : "string"
+                      "assets" : {
+                        "type" : "array",
+                        "items" : {
+                          "type" : "object",
+                          "properties" : {
+                            "name" : {
+                              "type" : "string"
+                            },
+                            "link" : {
+                              "type" : "string"
+                            }
+                          }
+                        }
                       },
-                      "uid" : {
+                      "stockimages" : {
+                        "type" : "array",
+                        "items" : {
+                          "type" : "object",
+                          "properties" : {
+                            "name" : {
+                              "type" : "string"
+                            },
+                            "link" : {
+                              "type" : "string"
+                            }
+                          }
+                        }
+                      },
+                      "logo" : {
+                        "type" : "array",
+                        "items" : {
+                          "type" : "object",
+                          "properties" : {
+                            "name" : {
+                              "type" : "string"
+                            },
+                            "link" : {
+                              "type" : "string"
+                            }
+                          }
+                        }
+                      },
+                      "storedfonts" : {
+                        "type" : "array",
+                        "items" : {
+                          "type" : "object",
+                          "properties" : {
+                            "name" : {
+                              "type" : "string"
+                            },
+                            "link" : {
+                              "type" : "string"
+                            }
+                          }
+                        }
+                      },
+                      "_id" : {
                         "type" : "string"
                       },
                       "createdAt" : {
@@ -998,9 +965,6 @@
                       }
                     },
                     "_id" : {
-                      "type" : "string"
-                    },
-                    "uid" : {
                       "type" : "string"
                     },
                     "createdAt" : {
@@ -1140,9 +1104,6 @@
                     "_id" : {
                       "type" : "string"
                     },
-                    "uid" : {
-                      "type" : "string"
-                    },
                     "createdAt" : {
                       "type" : "string",
                       "format" : "date-time"
@@ -1170,6 +1131,20 @@
                     } ],
                     "type" : "object",
                     "properties" : {
+                      "assets" : {
+                        "type" : "array",
+                        "items" : {
+                          "type" : "object",
+                          "properties" : {
+                            "name" : {
+                              "type" : "string"
+                            },
+                            "link" : {
+                              "type" : "string"
+                            }
+                          }
+                        }
+                      },
                       "brand" : {
                         "$ref" : "#/components/schemas/Brand"
                       },
@@ -1180,9 +1155,6 @@
                         "type" : "string"
                       },
                       "_id" : {
-                        "type" : "string"
-                      },
-                      "uid" : {
                         "type" : "string"
                       },
                       "createdAt" : {
@@ -1247,9 +1219,6 @@
                     "_id" : {
                       "type" : "string"
                     },
-                    "uid" : {
-                      "type" : "string"
-                    },
                     "createdAt" : {
                       "type" : "string",
                       "format" : "date-time"
@@ -1312,9 +1281,6 @@
                     "_id" : {
                       "type" : "string"
                     },
-                    "uid" : {
-                      "type" : "string"
-                    },
                     "createdAt" : {
                       "type" : "string",
                       "format" : "date-time"
@@ -1352,9 +1318,6 @@
                       "type" : "string"
                     },
                     "_id" : {
-                      "type" : "string"
-                    },
-                    "uid" : {
                       "type" : "string"
                     },
                     "createdAt" : {
@@ -1482,9 +1445,6 @@
                       "_id" : {
                         "type" : "string"
                       },
-                      "uid" : {
-                        "type" : "string"
-                      },
                       "createdAt" : {
                         "type" : "string",
                         "format" : "date-time"
@@ -1547,9 +1507,6 @@
                     "_id" : {
                       "type" : "string"
                     },
-                    "uid" : {
-                      "type" : "string"
-                    },
                     "createdAt" : {
                       "type" : "string",
                       "format" : "date-time"
@@ -1607,9 +1564,6 @@
                       "type" : "string"
                     },
                     "_id" : {
-                      "type" : "string"
-                    },
-                    "uid" : {
                       "type" : "string"
                     },
                     "createdAt" : {
@@ -1674,9 +1628,6 @@
                     "_id" : {
                       "type" : "string"
                     },
-                    "uid" : {
-                      "type" : "string"
-                    },
                     "createdAt" : {
                       "type" : "string",
                       "format" : "date-time"
@@ -1714,9 +1665,6 @@
                       "type" : "string"
                     },
                     "_id" : {
-                      "type" : "string"
-                    },
-                    "uid" : {
                       "type" : "string"
                     },
                     "createdAt" : {
@@ -1760,7 +1708,7 @@
           "phone" : {
             "type" : "string"
           },
-          "supervisor" : {
+          "sid" : {
             "type" : "string"
           }
         }
@@ -1791,7 +1739,7 @@
           "phone" : {
             "type" : "string"
           },
-          "designers" : {
+          "did" : {
             "type" : "array",
             "items" : {
               "type" : "string"

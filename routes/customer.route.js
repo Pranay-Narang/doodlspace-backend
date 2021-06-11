@@ -5,7 +5,7 @@ const controller = require('../controllers/customer.controller')
 const auth = require('../middleware/auth.middleware')
 
 router.post('/customers', auth(), controller.add)
-router.get('/customers', auth({ hasRole: ['owner', 'customer'] }), controller.read)
+router.get('/customers', auth({ hasRole: ['owner', 'customer', 'designer'] }), controller.read)
 router.patch('/customers/:id', auth({ hasRole: ['owner', 'customer'] }), controller.update)
 router.delete('/customers/:id', auth({ hasRole: ['owner'] }), controller.remove)
 

@@ -35,8 +35,12 @@ module.exports.add = add
 
 const read = async (req, res) => {
     if (req.role == 'customer') {
-        const customer = await model.find({ uid: req.uid }).populate('designers')
+        const customer = await model.find({ uid: req.uid }).populate('designers', 'name')
         return res.send(customer)
+    }
+    if(req.role == 'designer') {
+        const customers = await model.find({did: req.uid})
+        return res.send(customers)
     }
     const customers = await model.find().populate('designers')
     res.send(customers)
@@ -46,7 +50,7 @@ module.exports.read = read
 
 const update = async (req, res) => {
     var allowedFields = []
-    req.role == 'owner' ? allowedFields = ["name", "email", "phone", "designers", "company", "address"] : allowedFields = ["name", "email", "phone", "company", "address"]
+    req.role == 'owner' ? allowedFields = ["name", "email", "phone", "did", "company", "address"] : allowedFields = ["name", "email", "phone", "company", "address"]
     const updates = Object.keys(req.body)
     const customer = await model.findOne({ uid: req.params.id })
 
@@ -58,7 +62,7 @@ const update = async (req, res) => {
     try {
         updates.forEach((elem) => customer[elem] = req.body[elem])
         await customer.save()
-        await customer.populate('designers').execPopulate()
+        await customer.populate('designers', 'name').execPopulate()
         res.send(customer)
     } catch (e) {
         res.status(400).send(e)

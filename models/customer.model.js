@@ -108,13 +108,19 @@ const schema = new mongoose.Schema({
         type: String,
         required: true
     },
-    designers: [{ type: String, ref: 'Designer' }],
+    did: [String],
     company: companySchema,
     address: addressSchema
 }, {
     toObject: { virtuals: true },
     toJSON: { virtuals: true },
     timestamps: true
+})
+
+schema.virtual('designers', {
+    ref: 'Designer',
+    localField: 'did',
+    foreignField: 'uid'
 })
 
 const Customer = mongoose.model('Customer', schema)

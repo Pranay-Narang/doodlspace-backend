@@ -25,12 +25,17 @@ const schema = new mongoose.Schema({
         trim: true,
         lowercase: true
     },
-    supervisor: {
-        type: String,
-        ref: 'Supervisor'
-    },
+    sid: String
 }, {
+    toObject: { virtuals: true },
+    toJSON: { virtuals: true },
     timestamps: true
+})
+
+schema.virtual('supervisor', {
+    ref: 'Supervisor',
+    localField: 'sid',
+    foreignField: 'uid'
 })
 
 const Designer = mongoose.model('Designer', schema)

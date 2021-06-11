@@ -36,6 +36,10 @@ const read = async (req, res) => {
             const designer = await model.find({ uid: req.uid }).populate('supervisor')
             return res.send(designer)
         }
+        if (req.role == 'supervisor') {
+            const designers = await model.find({sid: req.uid})
+            return res.send(designers)
+        }
         const designers = await model.find({}).populate('supervisor')
         res.send(designers)
     } catch (e) {
@@ -46,7 +50,7 @@ const read = async (req, res) => {
 module.exports.read = read
 
 const update = async (req, res) => {
-    const allowedFields = ["name", "email", "phone", "supervisor"]
+    const allowedFields = ["name", "email", "phone", "sid"]
     const updates = Object.keys(req.body)
     const designer = await model.findOne({ uid: req.params.id })
 
