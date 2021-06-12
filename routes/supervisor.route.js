@@ -9,5 +9,4 @@ router.get("/supervisors", auth({ hasRole: ["owner", "supervisor"] }), controlle
 router.patch("/supervisors/:id", auth({ hasRole: ["owner"] }), controller.update);
 router.delete("/supervisors/:id", auth({ hasRole: ["owner"] }), controller.remove);
 
-router.get("/supervisors/:id/designers", auth({ hasRole: ["owner", "supervisor"] }), controller.readDesigners)
 module.exports = router;

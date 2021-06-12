@@ -9,5 +9,4 @@ router.get('/designers', auth({ hasRole: ['owner', 'designer', 'supervisor'] }),
 router.patch('/designers/:id', auth({ hasRole: ['owner'] }), controller.update)
 router.delete('/designers/:id', auth({ hasRole: ['owner'] }), controller.remove)
 
-router.get('/designers/:id/customers', auth({hasRole: ['owner', 'designer']}), controller.readCustomers)
 module.exports = router
