@@ -1,6 +1,8 @@
 const admin = require('firebase-admin')
 
 const model = require('../models/designer.model')
+const designRequestModel = require('../models/designrequest.model').DesignRequest
+const scheduledDesignRequestModel = require('../models/designrequest.model').ScheduledDesignRequest
 
 const add = async (req, res) => {
     try {
@@ -36,7 +38,7 @@ const read = async (req, res) => {
             return res.send(designer)
         }
         if (req.role == 'supervisor') {
-            const designers = await model.find({sid: req.uid})
+            const designers = await model.find({ sid: req.uid })
             return res.send(designers)
         }
         const designers = await model.find({}).populate('supervisor')
@@ -80,3 +82,21 @@ const remove = async (req, res) => {
 }
 
 module.exports.remove = remove
+
+const readDesignRequests = async (req, res) => {
+    const dr = await designRequestModel.find({ did: req.params.id })
+        .populate('brand')
+        .populate('designer')
+    res.send(dr)
+}
+
+module.exports.readDesignRequests = readDesignRequests
+
+const readScheduledDesignRequests = async (req, res) => {
+    const dr = await scheduledDesignRequestModel.find({ did: req.params.id })
+        .populate('brand')
+        .populate('designer')
+    res.send(dr)
+}
+
+module.exports.readScheduledDesignRequests = readScheduledDesignRequests

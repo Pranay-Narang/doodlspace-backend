@@ -347,6 +347,134 @@
         }
       }
     },
+    "/designers/{id}/designrequests" : {
+      "get" : {
+        "tags" : [ "Designers" ],
+        "summary" : "Fetch design requests per designer",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "allOf" : [ {
+                      "$ref" : "#/components/schemas/DesignRequest"
+                    } ],
+                    "type" : "object",
+                    "properties" : {
+                      "assets" : {
+                        "type" : "array",
+                        "items" : {
+                          "type" : "object",
+                          "properties" : {
+                            "name" : {
+                              "type" : "string"
+                            },
+                            "link" : {
+                              "type" : "string"
+                            }
+                          }
+                        }
+                      },
+                      "brand" : {
+                        "$ref" : "#/components/schemas/Brand"
+                      },
+                      "designer" : {
+                        "$ref" : "#/components/schemas/Designer"
+                      },
+                      "cid" : {
+                        "type" : "string"
+                      },
+                      "_id" : {
+                        "type" : "string"
+                      },
+                      "createdAt" : {
+                        "type" : "string",
+                        "format" : "date-time"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/designers/{id}/scheduled/designrequests" : {
+      "get" : {
+        "tags" : [ "Designers" ],
+        "summary" : "Fetch scheduled design requests per designer",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "allOf" : [ {
+                      "$ref" : "#/components/schemas/DesignRequest"
+                    } ],
+                    "type" : "object",
+                    "properties" : {
+                      "assets" : {
+                        "type" : "array",
+                        "items" : {
+                          "type" : "object",
+                          "properties" : {
+                            "name" : {
+                              "type" : "string"
+                            },
+                            "link" : {
+                              "type" : "string"
+                            }
+                          }
+                        }
+                      },
+                      "brand" : {
+                        "$ref" : "#/components/schemas/Brand"
+                      },
+                      "designer" : {
+                        "$ref" : "#/components/schemas/Designer"
+                      },
+                      "cid" : {
+                        "type" : "string"
+                      },
+                      "_id" : {
+                        "type" : "string"
+                      },
+                      "createdAt" : {
+                        "type" : "string",
+                        "format" : "date-time"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/supervisors" : {
       "post" : {
         "tags" : [ "Supervisors" ],
