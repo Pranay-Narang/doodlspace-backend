@@ -30,6 +30,10 @@ const add = async (req, res) => {
         attachments = req.files.attachments.map(asset => asset.key)
     }
 
+    if(req.body.attachments) {
+        attachments = req.body.attachments
+    }
+
     const comment = new model({
         designrequest: req.params.id,
         uid: req.uid,
