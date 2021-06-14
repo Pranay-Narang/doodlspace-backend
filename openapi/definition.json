@@ -2092,6 +2092,10 @@
             "items" : {
               "type" : "string"
             }
+          },
+          "status" : {
+            "type" : "string",
+            "enum" : [ "in-queue", "in-progress", "qa-requested", "qa-rejected", "qa-customer-partial", "qa-customer-full", "qa-customer-partial-rejected", "qa-customer-full-rejected", "done" ]
           }
         }
       },

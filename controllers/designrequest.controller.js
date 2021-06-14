@@ -18,6 +18,10 @@ const add = async (req, res) => {
         return res.status(400).send({ error: "Invalid ref. id" })
     }
 
+    if (req.body.status) {
+        return res.status(400).send({ error: "Cannot explicitly set status on creation" })
+    }
+
     const dr = new scheduledDRModel({
         cid: req.uid,
         ...req.body,
@@ -74,9 +78,20 @@ module.exports.addScheduled = addScheduled
 
 const read = async (req, res) => {
     if (req.role == 'customer') {
-        const dr = await model.find({ cid: req.uid })
+        const dr = await model.find({ cid: req.uid }).lean()
             .populate('brand')
             .populate('designer')
+
+        const designerQAStatus = ["qa-requested", "qa-rejected", "qa-customer-partial-rejected"]
+        const supervisorQAStatus = ["qa-customer-partial", "qa-customer-full"]
+        dr.map((elem) => {
+            if (designerQAStatus.includes(elem.status)) {
+                elem.status = "in-progress"
+            } else if (supervisorQAStatus.includes(elem.status)) {
+                elem.status = "qa-requested"
+            }
+            return elem
+        })
         return res.send(dr)
     }
 
@@ -89,6 +104,7 @@ const read = async (req, res) => {
 
     const globalDr = await model.find().populate('brand')
         .populate('designer')
+
     res.send(globalDr)
 }
 
@@ -114,12 +130,21 @@ const readOne = async (req, res) => {
         const dr = await model.findOne({
             cid: req.uid,
             _id: req.params.id
-        })
+        }).lean()
             .populate('brand')
             .populate('designer')
 
         if (!dr) {
             return res.status(404).send({})
+        }
+
+        const designerQAStatus = ["qa-requested", "qa-rejected", "qa-customer-partial-rejected"]
+        const supervisorQAStatus = ["qa-customer-partial", "qa-customer-full"]
+
+        if (designerQAStatus.includes(dr.status)) {
+            dr.status = "in-progress"
+        } else if (supervisorQAStatus.includes(dr.status)) {
+            dr.status = "qa-requested"
         }
 
         dr['assets'] = await preSigner(dr, 'assets')
@@ -166,13 +191,36 @@ const readOneScheduled = async (req, res) => {
 module.exports.readOneScheduled = readOneScheduled
 
 const update = async (req, res) => {
-    const allowedFields = ["name", "description", "copywrite", "brand", "formats", "native", "sizes", "assets", "stockimages"]
+    const allowedFields = ["name", "description", "copywrite", "brand", "formats", "native", "sizes", "assets", "stockimages", "status"]
+    const genericAllowedFields = ["status"]
     const updates = Object.keys(req.body)
     const dr = await model.findById(req.params.id)
 
     var assets = []
-    const validOperation = updates.every((elem) => allowedFields.includes(elem))
-    if (!validOperation) {
+    var validOperation = false
+    var statusValidation = false
+
+    if (req.role == 'customer' || req.role == 'owner') {
+        validOperation = updates.every((elem) => allowedFields.includes(elem))
+    } else {
+        validOperation = updates.every((elem) => genericAllowedFields.includes(elem))
+    }
+
+    if (req.body.status) {
+        const customerAllowedStatus = ["qa-customer-partial-rejected", "qa-customer-full-rejected", "done"]
+        const designerAllowedStatus = ["in-progress", "qa-requested"]
+        const supervisorAllowedStatus = ["qa-rejected", "qa-customer-partial", "qa-customer-full", "done"]
+
+        if (req.role == 'customer' && customerAllowedStatus.includes(req.body.status)) {
+            statusValidation = true
+        } else if (req.role == 'designer' && designerAllowedStatus.includes(req.body.status)) {
+            statusValidation = true
+        } else if (req.role == 'supervisor' && supervisorAllowedStatus.includes(req.body.status)) {
+            statusValidation = true
+        }
+    }
+
+    if (!validOperation || !statusValidation) {
         return res.status(400).send({ error: "Invalid operation" })
     }
 
