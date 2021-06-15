@@ -1,11 +1,17 @@
 const mongoose = require("mongoose")
 const validator = require("validator")
 
+const coordinateSchema = new mongoose.Schema({
+    x: { type: String, required: true },
+    y: { type: String, required: true }
+})
+
 const schema = new mongoose.Schema({
     designrequest: { type: String, ref: 'DesignRequest', required: true },
     private: { type: Boolean, default: false },
     attachments: [String],
     uid: { type: String },
+    coordinates: coordinateSchema,
     value: String,
     role: {
         type: String,

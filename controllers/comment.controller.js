@@ -8,7 +8,7 @@ const model = require('../models/comment.model')
 const preSigner = require('../utils/urlgenerator.util')
 
 const add = async (req, res) => {
-    const allowedFields = ["value", "attachments"]
+    const allowedFields = ["value", "attachments", "coordinates"]
     const updates = Object.keys(req.body)
 
     if (req.role != 'customer') {

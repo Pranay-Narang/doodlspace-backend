@@ -2114,6 +2114,17 @@
             "items" : {
               "type" : "string"
             }
+          },
+          "coordinates" : {
+            "type" : "object",
+            "properties" : {
+              "x" : {
+                "type" : "string"
+              },
+              "y" : {
+                "type" : "string"
+              }
+            }
           }
         }
       }
