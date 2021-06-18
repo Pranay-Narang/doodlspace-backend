@@ -29,13 +29,13 @@ const upload = multer({
             cb(null, 'brands/uploads/' + req.uid + '/' + file.fieldname + '/' + file.originalname)
         }
     }),
-    fileFilter(req, file, cb) {
-        if (!file.originalname.match(/\.(png|jpg|ttf)$/)) {
-            return cb(new Error('Please upload a PNG/JPG'))
-        }
+    // fileFilter(req, file, cb) {
+    //     if (!file.originalname.match(/\.(png|jpg|ttf)$/)) {
+    //         return cb(new Error('Please upload a PNG/JPG'))
+    //     }
 
-        cb(undefined, true)
-    },
+    //     cb(undefined, true)
+    // },
 });
 
 router.post('/brands', auth({ hasRole: ['customer'] }), upload.fields([
