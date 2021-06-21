@@ -20,7 +20,8 @@ const schema = new mongoose.Schema({
         type: String,
         enum: ["in-queue", "in-progress", "qa-requested", "qa-rejected",
             "qa-customer-partial", "qa-customer-full", "qa-customer-partial-rejected",
-            "qa-customer-full-rejected", "done"],
+            "qa-customer-full-rejected", "done", "designer-reject", "supervisor-reject",
+            "rejected", "on-hold", "qa-customer-partial-approved", "request-revision"],
         default: "in-queue"
     }
 }, {
