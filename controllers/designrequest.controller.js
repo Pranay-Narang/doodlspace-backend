@@ -19,8 +19,8 @@ const add = async (req, res) => {
         return res.status(400).send({ error: "Invalid ref. id" })
     }
 
-    if(req.body.drid) {
-        return res.status(400).send({error: "Cannot set ID explicitly"})
+    if (req.body.drid) {
+        return res.status(400).send({ error: "Cannot set ID explicitly" })
     }
 
     if (req.body.status) {
@@ -90,8 +90,8 @@ const addDraft = async (req, res) => {
         assets = req.files.assets.map(asset => asset.key)
     }
 
-    if(req.body.drid) {
-        return res.status(400).send({error: "Cannot set ID explicitly"})
+    if (req.body.drid) {
+        return res.status(400).send({ error: "Cannot set ID explicitly" })
     }
 
     if (!ObjectId.isValid(req.body.brand)) {
@@ -301,7 +301,8 @@ const update = async (req, res) => {
         const customerAllowedStatus = ["qa-customer-partial-rejected", "qa-customer-full-rejected", "done", "rejected", "on-hold",
             "qa-customer-partial-approved", "request-revision"]
         const designerAllowedStatus = ["in-progress", "qa-requested", "designer-reject"]
-        const supervisorAllowedStatus = ["qa-rejected", "qa-customer-partial", "qa-customer-full", "done", "supervisor-reject", "on-hold"]
+        const supervisorAllowedStatus = ["qa-rejected", "qa-customer-partial", "qa-customer-full", "done", "supervisor-reject", "on-hold",
+            "in-progress"]
 
         if (req.role == 'customer' && customerAllowedStatus.includes(req.body.status)) {
             statusValidation = true
