@@ -1,7 +1,7 @@
 {
-  "name": "express-service-template",
+  "name": "doodlspace-backend",
   "version": "1.0.0",
-  "description": "Template repository for ExpressJS based services",
+  "description": "DoodlSpace API repository",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon index.js",
@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kalpasin/express-service-template.git"
+    "url": "git+https://github.com/Edalytix/doodlspace-backend.git"
   },
   "author": "Pranay Narang",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/kalpasin/express-service-template/issues"
+    "url": "https://github.com/Edalytix/doodlspace-backend/issues"
   },
-  "homepage": "https://github.com/kalpasin/express-service-template#readme",
+  "homepage": "https://github.com/Edalytix/doodlspace-backend#readme",
   "dependencies": {
     "@aws-sdk/s3-request-presigner": "^3.13.0",
     "aws-sdk": "^2.888.0",
@@ -26,6 +26,7 @@
     "firebase-admin": "^9.5.0",
     "glob": "^7.1.6",
     "mongoose": "^5.12.0",
+    "mongoose-sequence": "^5.3.1",
     "morgan": "^1.10.0",
     "multer": "^1.4.2",
     "multer-s3": "^2.9.0",

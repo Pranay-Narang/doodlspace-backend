@@ -2347,6 +2347,20 @@
               "type" : "string"
             }
           },
+          "drid" : {
+            "type" : "object",
+            "properties" : {
+              "def" : {
+                "type" : "string"
+              },
+              "year" : {
+                "type" : "string"
+              },
+              "seq" : {
+                "type" : "number"
+              }
+            }
+          },
           "status" : {
             "type" : "string",
             "enum" : [ "in-queue", "in-progress", "qa-requested", "qa-rejected", "qa-customer-partial", "qa-customer-full", "qa-customer-partial-rejected", "qa-customer-full-rejected", "done", "designer-reject", "supervisor-reject", "rejected", "on-hold", "qa-customer-partial-approved", "request-revision" ]

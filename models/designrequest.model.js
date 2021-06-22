@@ -1,5 +1,6 @@
 const mongoose = require("mongoose")
 const validator = require("validator")
+const AutoIncrement = require('mongoose-sequence')(mongoose);
 
 const schema = new mongoose.Schema({
     cid: String,
@@ -14,6 +15,11 @@ const schema = new mongoose.Schema({
     native: String,
     sizes: Array,
     did: String,
+    drid: {
+        def: {type: String, default: "DR"},
+        year: {type: String},
+        seq: {type: Number}
+    },
     assets: Array,
     stockimages: Array,
     status: {
@@ -36,6 +42,8 @@ schema.virtual('designer', {
     foreignField: 'uid',
     justOne: true
 })
+
+schema.plugin(AutoIncrement, {inc_field: 'drid.seq', disable_hooks: true})
 
 const DesignRequest = mongoose.model('DesignRequest', schema)
 const ScheduledDesignRequest = mongoose.model('ScheduledDesignRequest', schema)

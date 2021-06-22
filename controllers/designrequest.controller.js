@@ -19,6 +19,10 @@ const add = async (req, res) => {
         return res.status(400).send({ error: "Invalid ref. id" })
     }
 
+    if(req.body.drid) {
+        return res.status(400).send({error: "Cannot set ID explicitly"})
+    }
+
     if (req.body.status) {
         return res.status(400).send({ error: "Cannot explicitly set status on creation" })
     }
@@ -28,6 +32,9 @@ const add = async (req, res) => {
         ...req.body,
         assets
     })
+
+    dr.setNext('drid.seq')
+    dr.drid.year = new Date().getFullYear().toString().substr(2, 2)
 
     try {
         await dr.save()
@@ -83,6 +90,10 @@ const addDraft = async (req, res) => {
         assets = req.files.assets.map(asset => asset.key)
     }
 
+    if(req.body.drid) {
+        return res.status(400).send({error: "Cannot set ID explicitly"})
+    }
+
     if (!ObjectId.isValid(req.body.brand)) {
         return res.status(400).send({ error: "Invalid ref. id" })
     }
@@ -127,6 +138,8 @@ const forceDraft = async (req, res) => {
     delete drJSON.id
 
     const scheduledDr = new scheduledDRModel(drJSON)
+    scheduledDr.drid.year = new Date().getFullYear().toString().substr(2, 2)
+    scheduledDr.setNext('drid.seq')
 
     try {
         await scheduledDr.save()
@@ -137,7 +150,7 @@ const forceDraft = async (req, res) => {
         scheduledDr['assets'] = await preSigner(dr, 'assets')
 
         await dr.remove()
-        res.status(201).send(dr)
+        res.status(201).send(scheduledDr)
     } catch (e) {
         res.status(400).send(e)
     }
