@@ -23,6 +23,10 @@ const add = async (req, res) => {
         storedfonts = req.files.storedfonts.map(e => e.key)
     }
 
+    if(req.body.brid) {
+        return res.status(400).send({error: "Cannot set ID explicitly"})
+    }
+
     const brand = new model({
         cid: req.uid,
         ...req.body,
@@ -31,6 +35,7 @@ const add = async (req, res) => {
         logo,
         storedfonts
     })
+
     try {
         await brand.save()
         brand['assets'] = await preSigner(brand, 'assets')

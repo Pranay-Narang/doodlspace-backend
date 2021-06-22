@@ -1,5 +1,6 @@
 const mongoose = require("mongoose")
 const validator = require("validator")
+const AutoIncrement = require('mongoose-sequence')(mongoose)
 
 const socialSchema = new mongoose.Schema({
     name: String,
@@ -33,6 +34,11 @@ const schema = new mongoose.Schema(
         targetaudience: [String],
         fonts: [fontSchema],
         storedfonts: [],
+        brid: {
+            def: {type: String, default: "BR"},
+            year: {type: String},
+            seq: {type: Number}
+        },
         status: {
             type: String,
             enum: ["active", "inactive"],
@@ -42,6 +48,13 @@ const schema = new mongoose.Schema(
         timestamps: true
     }
 )
+
+schema.plugin(AutoIncrement, {inc_field: 'brid.seq'})
+
+schema.pre('save', async function (next) {
+    this.brid.year = new Date().getFullYear().toString().substr(2, 2)
+    next()
+})
 
 const Brand = mongoose.model('Brand', schema)
 

@@ -2296,6 +2296,20 @@
               "type" : "string"
             }
           },
+          "brid" : {
+            "type" : "object",
+            "properties" : {
+              "def" : {
+                "type" : "string"
+              },
+              "year" : {
+                "type" : "string"
+              },
+              "seq" : {
+                "type" : "number"
+              }
+            }
+          },
           "status" : {
             "type" : "string",
             "enum" : [ "active", "inactive" ]
