@@ -164,13 +164,16 @@ const read = async (req, res) => {
             .populate('brand')
             .populate('designer')
 
-        const designerQAStatus = ["qa-requested", "qa-rejected", "qa-customer-partial-rejected"]
-        const supervisorQAStatus = ["qa-customer-partial", "qa-customer-full"]
+        const designerQAStatus = ["qa-requested", "qa-rejected", "qa-customer-partial-rejected", "qa-supervisor-approved-partial"]
+        const supervisorQAStatus = ["qa-customer-partial"]
+        const submittedStatus = ["qa-customer-full"]
         dr.map((elem) => {
             if (designerQAStatus.includes(elem.status)) {
                 elem.status = "in-progress"
             } else if (supervisorQAStatus.includes(elem.status)) {
                 elem.status = "qa-requested"
+            } else if (submittedStatus.includes(elem.status)) {
+                elem.status = "submitted"
             }
             return elem
         })
@@ -302,7 +305,7 @@ const update = async (req, res) => {
             "qa-customer-partial-approved", "request-revision"]
         const designerAllowedStatus = ["in-progress", "qa-requested", "designer-reject", "qa-customer-partial"]
         const supervisorAllowedStatus = ["qa-rejected", "qa-customer-partial", "qa-customer-full", "done", "supervisor-reject", "on-hold",
-            "in-progress"]
+            "in-progress", "qa-supervisor-approved-partial"]
 
         if (req.role == 'customer' && customerAllowedStatus.includes(req.body.status)) {
             statusValidation = true
