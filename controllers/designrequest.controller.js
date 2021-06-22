@@ -300,7 +300,7 @@ const update = async (req, res) => {
     if (req.body.status) {
         const customerAllowedStatus = ["qa-customer-partial-rejected", "qa-customer-full-rejected", "done", "rejected", "on-hold",
             "qa-customer-partial-approved", "request-revision"]
-        const designerAllowedStatus = ["in-progress", "qa-requested", "designer-reject"]
+        const designerAllowedStatus = ["in-progress", "qa-requested", "designer-reject", "qa-customer-partial"]
         const supervisorAllowedStatus = ["qa-rejected", "qa-customer-partial", "qa-customer-full", "done", "supervisor-reject", "on-hold",
             "in-progress"]
 
