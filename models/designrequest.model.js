@@ -39,5 +39,6 @@ schema.virtual('designer', {
 
 const DesignRequest = mongoose.model('DesignRequest', schema)
 const ScheduledDesignRequest = mongoose.model('ScheduledDesignRequest', schema)
+const DraftDesignRequest = mongoose.model('DraftDesignRequest', schema)
 
-module.exports = { DesignRequest, ScheduledDesignRequest }
+module.exports = { DesignRequest, ScheduledDesignRequest, DraftDesignRequest }

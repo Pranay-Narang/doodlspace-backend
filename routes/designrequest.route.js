@@ -54,6 +54,16 @@ router.get('/scheduled/designrequests/:id', auth({ hasRole: ['customer', 'owner'
 router.patch('/scheduled/designrequests/:id', auth({ hasRole: ['customer', 'owner'] }), upload.fields([
     { name: 'assets', maxCount: 10 },
 ]), controller.updateScheduled)
-router.delete('/scheduled/designrequests/:id', auth({hasRole: ['customer', 'owner']}), controller.removeScheduled)
+router.delete('/scheduled/designrequests/:id', auth({ hasRole: ['customer', 'owner'] }), controller.removeScheduled)
+
+router.post('/drafts/designrequests', auth({ hasRole: ['customer'] }), upload.fields([
+    { name: 'assets', maxCount: 10 }
+]), controller.addDraft)
+router.post('/drafts/designrequests/:id', auth({hasRole: ['customer']}), controller.forceDraft)
+router.get('/drafts/designrequests', auth({ hasRole: ['customer'] }), controller.readDraft)
+router.patch('/drafts/designrequests/:id', auth({ hasRole: ['customer'] }), upload.fields([
+    { name: 'assets', maxCount: 10 }
+]), controller.updateDraft)
+router.delete('/drafts/designrequests/:id', auth({ hasRole: ['customer'] }), controller.removeDraft)
 
 module.exports = router

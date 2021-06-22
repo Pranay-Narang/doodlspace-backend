@@ -5,6 +5,7 @@ const CONFIG = require('../config/config');
 
 const model = require('../models/designrequest.model').DesignRequest
 const scheduledDRModel = require("../models/designrequest.model").ScheduledDesignRequest
+const draftDRModel = require("../models/designrequest.model").DraftDesignRequest
 
 const preSigner = require('../utils/urlgenerator.util')
 
@@ -76,6 +77,74 @@ const addScheduled = async (req, res) => {
 
 module.exports.addScheduled = addScheduled
 
+const addDraft = async (req, res) => {
+    var assets = []
+    if (req.files.assets) {
+        assets = req.files.assets.map(asset => asset.key)
+    }
+
+    if (!ObjectId.isValid(req.body.brand)) {
+        return res.status(400).send({ error: "Invalid ref. id" })
+    }
+
+    if (req.body.status) {
+        return res.status(400).send({ error: "Cannot explicitly set status on creation" })
+    }
+
+    const dr = new draftDRModel({
+        cid: req.uid,
+        ...req.body,
+        assets
+    })
+
+    try {
+        await dr.save()
+        await dr.populate('brand')
+            .populate('designer')
+            .execPopulate()
+        dr['assets'] = await preSigner(dr, 'assets')
+        res.status(201).send(dr)
+    } catch (e) {
+        res.status(400).send(e)
+    }
+}
+
+module.exports.addDraft = addDraft
+
+const forceDraft = async (req, res) => {
+    if (!ObjectId.isValid(req.params.id)) {
+        return res.status(400).send({ error: "Invalid ref. id" })
+    }
+
+    const dr = await draftDRModel.findOne({ _id: req.params.id })
+
+    if (!dr) {
+        return res.status(404).send({})
+    }
+    var drJSON = dr.toJSON()
+
+    delete drJSON._id
+    delete drJSON.id
+
+    const scheduledDr = new scheduledDRModel(drJSON)
+
+    try {
+        await scheduledDr.save()
+
+        await scheduledDr.populate('brand')
+            .populate('designer')
+            .execPopulate()
+        scheduledDr['assets'] = await preSigner(dr, 'assets')
+
+        await dr.remove()
+        res.status(201).send(dr)
+    } catch (e) {
+        res.status(400).send(e)
+    }
+}
+
+module.exports.forceDraft = forceDraft
+
 const read = async (req, res) => {
     if (req.role == 'customer') {
         const dr = await model.find({ cid: req.uid }).lean()
@@ -124,6 +193,15 @@ const readScheduled = async (req, res) => {
 }
 
 module.exports.readScheduled = readScheduled
+
+const readDraft = async (req, res) => {
+    const dr = await draftDRModel.find({ cid: req.uid })
+        .populate('brand')
+        .populate('designer')
+    res.send(dr)
+}
+
+module.exports.readDraft = readDraft
 
 const readOne = async (req, res) => {
     if (req.role == 'customer') {
@@ -208,7 +286,7 @@ const update = async (req, res) => {
 
     if (req.body.status) {
         const customerAllowedStatus = ["qa-customer-partial-rejected", "qa-customer-full-rejected", "done", "rejected", "on-hold",
-                                        "qa-customer-partial-approved", "request-revision"]
+            "qa-customer-partial-approved", "request-revision"]
         const designerAllowedStatus = ["in-progress", "qa-requested", "designer-reject"]
         const supervisorAllowedStatus = ["qa-rejected", "qa-customer-partial", "qa-customer-full", "done", "supervisor-reject", "on-hold"]
 
@@ -276,6 +354,37 @@ const updateScheduled = async (req, res) => {
 
 module.exports.updateScheduled = updateScheduled
 
+const updateDraft = async (req, res) => {
+    const allowedFields = ["name", "description", "copywrite", "brand", "formats", "native", "sizes", "assets", "stockimages"]
+    const updates = Object.keys(req.body)
+    const dr = await draftDRModel.findById(req.params.id)
+
+    var assets = []
+    const validOperation = updates.every((elem) => allowedFields.includes(elem))
+    if (!validOperation) {
+        return res.status(400).send({ error: "Invalid operation" })
+    }
+
+    if (req.files.assets) {
+        assets = req.files.assets.map(asset => asset.key)
+    }
+
+    try {
+        updates.forEach((elem) => dr[elem] = req.body[elem])
+        dr['assets'] = dr['assets'].concat(assets)
+        await dr.save()
+        await dr.populate('brand')
+            .populate('designer')
+            .execPopulate()
+        dr['assets'] = await preSigner(dr, 'assets')
+        res.send(dr)
+    } catch (e) {
+        res.status(400).send(e)
+    }
+}
+
+module.exports.updateDraft = updateDraft
+
 const remove = async (req, res) => {
     const dr = await model.findById(req.params.id)
 
@@ -309,3 +418,20 @@ const removeScheduled = async (req, res) => {
 }
 
 module.exports.removeScheduled = removeScheduled
+
+const removeDraft = async (req, res) => {
+    const dr = await draftDRModel.findById(req.params.id)
+
+    if (req.uid != dr.cid) {
+        return res.status(401).send({ error: 'Access denied' })
+    }
+
+    try {
+        await dr.remove()
+        res.send(dr)
+    } catch (e) {
+        res.status(404).send(e)
+    }
+}
+
+module.exports.removeDraft = removeDraft

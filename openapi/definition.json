@@ -21,6 +21,8 @@
     "name" : "Design Request Comments"
   }, {
     "name" : "Scheduled Design Requests"
+  }, {
+    "name" : "Draft Design Requests"
   } ],
   "paths" : {
     "/owners" : {
@@ -1806,6 +1808,258 @@
           }
         }
       }
+    },
+    "/drafts/designrequests" : {
+      "post" : {
+        "tags" : [ "Draft Design Requests" ],
+        "summary" : "Create draft for design requests",
+        "requestBody" : {
+          "$ref" : "#/components/requestBodies/DesignRequest"
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "allOf" : [ {
+                    "$ref" : "#/components/schemas/DesignRequest"
+                  } ],
+                  "type" : "object",
+                  "properties" : {
+                    "assets" : {
+                      "type" : "array",
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "name" : {
+                            "type" : "string"
+                          },
+                          "link" : {
+                            "type" : "string"
+                          }
+                        }
+                      }
+                    },
+                    "brand" : {
+                      "$ref" : "#/components/schemas/Brand"
+                    },
+                    "designer" : {
+                      "$ref" : "#/components/schemas/Designer"
+                    },
+                    "cid" : {
+                      "type" : "string"
+                    },
+                    "_id" : {
+                      "type" : "string"
+                    },
+                    "createdAt" : {
+                      "type" : "string",
+                      "format" : "date-time"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get" : {
+        "tags" : [ "Draft Design Requests" ],
+        "summary" : "Read design request drafts",
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "allOf" : [ {
+                      "$ref" : "#/components/schemas/DesignRequest"
+                    } ],
+                    "type" : "object",
+                    "properties" : {
+                      "assets" : {
+                        "type" : "array",
+                        "items" : {
+                          "type" : "object",
+                          "properties" : {
+                            "name" : {
+                              "type" : "string"
+                            },
+                            "link" : {
+                              "type" : "string"
+                            }
+                          }
+                        }
+                      },
+                      "brand" : {
+                        "$ref" : "#/components/schemas/Brand"
+                      },
+                      "designer" : {
+                        "$ref" : "#/components/schemas/Designer"
+                      },
+                      "cid" : {
+                        "type" : "string"
+                      },
+                      "_id" : {
+                        "type" : "string"
+                      },
+                      "createdAt" : {
+                        "type" : "string",
+                        "format" : "date-time"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/drafts/designrequests/{id}" : {
+      "patch" : {
+        "summary" : "Update design request draft",
+        "tags" : [ "Draft Design Requests" ],
+        "parameters" : [ {
+          "in" : "path",
+          "required" : true,
+          "name" : "id",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "$ref" : "#/components/requestBodies/DesignRequest"
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "allOf" : [ {
+                    "$ref" : "#/components/schemas/DesignRequest"
+                  } ],
+                  "type" : "object",
+                  "properties" : {
+                    "assets" : {
+                      "type" : "array",
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "name" : {
+                            "type" : "string"
+                          },
+                          "link" : {
+                            "type" : "string"
+                          }
+                        }
+                      }
+                    },
+                    "brand" : {
+                      "$ref" : "#/components/schemas/Brand"
+                    },
+                    "designer" : {
+                      "$ref" : "#/components/schemas/Designer"
+                    },
+                    "cid" : {
+                      "type" : "string"
+                    },
+                    "_id" : {
+                      "type" : "string"
+                    },
+                    "createdAt" : {
+                      "type" : "string",
+                      "format" : "date-time"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "Draft Design Requests" ],
+        "summary" : "Delete design request draft",
+        "parameters" : [ {
+          "in" : "path",
+          "required" : true,
+          "name" : "id",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "allOf" : [ {
+                    "$ref" : "#/components/schemas/DesignRequest"
+                  } ],
+                  "type" : "object",
+                  "properties" : {
+                    "cid" : {
+                      "type" : "string"
+                    },
+                    "_id" : {
+                      "type" : "string"
+                    },
+                    "createdAt" : {
+                      "type" : "string",
+                      "format" : "date-time"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Draft Design Requests" ],
+        "summary" : "Force design request draft into queue",
+        "parameters" : [ {
+          "in" : "path",
+          "required" : true,
+          "name" : "id",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "allOf" : [ {
+                    "$ref" : "#/components/schemas/DesignRequest"
+                  } ],
+                  "type" : "object",
+                  "properties" : {
+                    "cid" : {
+                      "type" : "string"
+                    },
+                    "_id" : {
+                      "type" : "string"
+                    },
+                    "createdAt" : {
+                      "type" : "string",
+                      "format" : "date-time"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components" : {
@@ -2095,7 +2349,7 @@
           },
           "status" : {
             "type" : "string",
-            "enum" : [ "in-queue", "in-progress", "qa-requested", "qa-rejected", "qa-customer-partial", "qa-customer-full", "qa-customer-partial-rejected", "qa-customer-full-rejected", "done" ]
+            "enum" : [ "in-queue", "in-progress", "qa-requested", "qa-rejected", "qa-customer-partial", "qa-customer-full", "qa-customer-partial-rejected", "qa-customer-full-rejected", "done", "designer-reject", "supervisor-reject", "rejected", "on-hold", "qa-customer-partial-approved", "request-revision" ]
           }
         }
       },
