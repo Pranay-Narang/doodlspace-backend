@@ -214,6 +214,11 @@ const readDraft = async (req, res) => {
     const dr = await draftDRModel.find({ cid: req.uid })
         .populate('brand')
         .populate('designer')
+
+    await Promise.all(dr.map(async elem => {
+        elem['assets'] = await preSigner(elem, 'assets')
+        return elem
+    }))
     res.send(dr)
 }
 
