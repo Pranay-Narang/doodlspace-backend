@@ -297,7 +297,7 @@ const update = async (req, res) => {
 
     var assets = []
     var validOperation = false
-    var statusValidation = false
+    var statusValidation = true
 
     if (req.role == 'customer' || req.role == 'owner') {
         validOperation = updates.every((elem) => allowedFields.includes(elem))
@@ -312,12 +312,12 @@ const update = async (req, res) => {
         const supervisorAllowedStatus = ["qa-rejected", "qa-customer-partial", "qa-customer-full", "done", "supervisor-reject", "on-hold",
             "in-progress", "qa-supervisor-approved-partial"]
 
-        if (req.role == 'customer' && customerAllowedStatus.includes(req.body.status)) {
-            statusValidation = true
-        } else if (req.role == 'designer' && designerAllowedStatus.includes(req.body.status)) {
-            statusValidation = true
-        } else if (req.role == 'supervisor' && supervisorAllowedStatus.includes(req.body.status)) {
-            statusValidation = true
+        if (req.role == 'customer' && !customerAllowedStatus.includes(req.body.status)) {
+            statusValidation = false
+        } else if (req.role == 'designer' && !designerAllowedStatus.includes(req.body.status)) {
+            statusValidation = false
+        } else if (req.role == 'supervisor' && !supervisorAllowedStatus.includes(req.body.status)) {
+            statusValidation = false
         }
     }
 
