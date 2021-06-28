@@ -2,6 +2,7 @@ const mongoose = require("mongoose")
 const validator = require("validator")
 
 const coordinateSchema = new mongoose.Schema({
+    asset: { type: String, required: true },
     x: { type: String, required: true },
     y: { type: String, required: true }
 })

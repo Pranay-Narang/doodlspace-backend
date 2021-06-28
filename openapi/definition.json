@@ -2400,6 +2400,9 @@
           "coordinates" : {
             "type" : "object",
             "properties" : {
+              "asset" : {
+                "type" : "string"
+              },
               "x" : {
                 "type" : "string"
               },
