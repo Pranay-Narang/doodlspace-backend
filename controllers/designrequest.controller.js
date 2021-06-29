@@ -184,11 +184,21 @@ const read = async (req, res) => {
         const dr = await model.find({ did: req.uid })
             .populate('brand')
             .populate('designer')
+
+        await Promise.all(dr.map(async elem => {
+            elem['assets'] = await preSigner(elem, 'assets')
+            return elem
+        }))
         return res.send(dr)
     }
 
     const globalDr = await model.find().populate('brand')
         .populate('designer')
+
+    await Promise.all(globalDr.map(async elem => {
+        elem['assets'] = await preSigner(elem, 'assets')
+        return elem
+    }))
 
     res.send(globalDr)
 }
@@ -253,6 +263,7 @@ const readOne = async (req, res) => {
     const globalDr = await model.findOne({ _id: req.params.id })
         .populate('brand')
         .populate('designer')
+    globalDr['assets'] = await preSigner(globalDr, 'assets')
     res.send(globalDr)
 }
 
