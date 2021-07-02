@@ -164,16 +164,15 @@ const read = async (req, res) => {
             .populate('brand')
             .populate('designer')
 
-        const designerQAStatus = ["qa-requested", "qa-rejected", "qa-customer-partial-rejected", "qa-supervisor-approved-partial"]
-        const supervisorQAStatus = ["qa-customer-partial"]
-        const submittedStatus = ["qa-customer-full"]
+        const openStatusShadow = ["in-queue", "designer-reject"]
+        const inProgressStatusShadow = ["qa-supervisor", "qa-supervisor-rejected",
+            "qa-supervisor-partial-approved", "qa-supervisor-full-approved"]
+
         dr.map((elem) => {
-            if (designerQAStatus.includes(elem.status)) {
+            if (openStatusShadow.includes(elem.status)) {
+                elem.status = "open"
+            } else if (inProgressStatusShadow.includes(elem.status)) {
                 elem.status = "in-progress"
-            } else if (supervisorQAStatus.includes(elem.status)) {
-                elem.status = "qa-requested"
-            } else if (submittedStatus.includes(elem.status)) {
-                elem.status = "submitted"
             }
             return elem
         })
@@ -317,11 +316,12 @@ const update = async (req, res) => {
     }
 
     if (req.body.status) {
-        const customerAllowedStatus = ["qa-customer-partial-rejected", "qa-customer-full-rejected", "done", "rejected", "on-hold",
-            "qa-customer-partial-approved", "request-revision"]
-        const designerAllowedStatus = ["in-progress", "qa-requested", "designer-reject", "qa-customer-partial"]
-        const supervisorAllowedStatus = ["qa-rejected", "qa-customer-partial", "qa-customer-full", "done", "supervisor-reject", "on-hold",
-            "in-progress", "qa-supervisor-approved-partial"]
+        const customerAllowedStatus = ["on-hold", "request-revision", "completed"]
+        const designerAllowedStatus = ["designer-reject", "awaiting-response", "qa-supervisor", "on-hold", "in-queue",
+            "in-progress", "submitted"]
+        const supervisorAllowedStatus = ["supervisor-reject-approved", "awaiting-response", "qa-supervisor-rejected",
+            "qa-supervisor-partial-approved", "qa-supervisor-full-approved", "in-queue", "in-progress", "submitted",
+            "on-hold", "completed"]
 
         if (req.role == 'customer' && !customerAllowedStatus.includes(req.body.status)) {
             statusValidation = false
