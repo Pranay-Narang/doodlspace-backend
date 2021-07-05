@@ -4,6 +4,8 @@ const model = require('../models/designer.model')
 const designRequestModel = require('../models/designrequest.model').DesignRequest
 const scheduledDesignRequestModel = require('../models/designrequest.model').ScheduledDesignRequest
 
+const preSigner = require('../utils/urlgenerator.util')
+
 const add = async (req, res) => {
     try {
         const designerRecord = await admin.auth().createUser({
@@ -87,6 +89,11 @@ const readDesignRequests = async (req, res) => {
     const dr = await designRequestModel.find({ did: req.params.id })
         .populate('brand')
         .populate('designer')
+
+    await Promise.all(dr.map(async elem => {
+        elem['assets'] = await preSigner(elem, 'assets')
+        return elem
+    }))
     res.send(dr)
 }
 
@@ -96,6 +103,11 @@ const readScheduledDesignRequests = async (req, res) => {
     const dr = await scheduledDesignRequestModel.find({ did: req.params.id })
         .populate('brand')
         .populate('designer')
+
+    await Promise.all(dr.map(async elem => {
+        elem['assets'] = await preSigner(elem, 'assets')
+        return elem
+    }))
     res.send(dr)
 }
 
