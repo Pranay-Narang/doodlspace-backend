@@ -6,6 +6,7 @@ const CONFIG = require('../config/config');
 const model = require('../models/designrequest.model').DesignRequest
 const scheduledDRModel = require("../models/designrequest.model").ScheduledDesignRequest
 const draftDRModel = require("../models/designrequest.model").DraftDesignRequest
+const commentModel = require('../models/comment.model')
 
 const preSigner = require('../utils/urlgenerator.util')
 
@@ -329,6 +330,16 @@ const update = async (req, res) => {
             statusValidation = false
         } else if (req.role == 'supervisor' && !supervisorAllowedStatus.includes(req.body.status)) {
             statusValidation = false
+        }
+
+        if (statusValidation) {
+            const comment = new commentModel({
+                designrequest: req.params.id,
+                uid: req.uid,
+                role: req['role'].charAt(0).toUpperCase() + req['role'].slice(1),
+                value: `Changed status to ${req.body.status}`
+            })
+            await comment.save()
         }
     }
 
