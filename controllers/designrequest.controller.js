@@ -333,11 +333,28 @@ const update = async (req, res) => {
         }
 
         if (statusValidation) {
+            const statusMaps = {
+                "open": "Open",
+                "in-queue": "In Queue",
+                "designer-reject": "Designer - Rejected",
+                "supervisor-reject-approved": "Supervisor - Approved",
+                "in-progress": "In Progress",
+                "awaiting-response": "Awaiting Response",
+                "qa-supervisor": "QA - Supervisor",
+                "qa-supervisor-rejected": "QA - Supervisor - Rejected",
+                "qa-supervisor-partial-approved": "QA - Supervisor - Partially Approved",
+                "qa-supervisor-full-approved": "QA - Supervisor - Fully Approved",
+                "submitted": "Submitted",
+                "request-revision": "Revision Requested",
+                "completed": "Completed",
+                "on-hold": "On Hold"
+            }
+
             const comment = new commentModel({
                 designrequest: req.params.id,
                 uid: req.uid,
                 role: req['role'].charAt(0).toUpperCase() + req['role'].slice(1),
-                value: `Changed status to ${req.body.status}`
+                value: `Changed status to ${statusMaps[req.body.status]}`
             })
             await comment.save()
         }
