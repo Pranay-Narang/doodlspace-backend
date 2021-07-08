@@ -2375,9 +2375,12 @@
               }
             }
           },
+          "prevstatus" : {
+            "type" : "string"
+          },
           "status" : {
             "type" : "string",
-            "enum" : [ "in-queue", "in-progress", "qa-requested", "qa-rejected", "qa-customer-partial", "qa-customer-full", "qa-customer-partial-rejected", "qa-customer-full-rejected", "done", "designer-reject", "supervisor-reject", "rejected", "on-hold", "qa-customer-partial-approved", "request-revision" ]
+            "enum" : [ "open", "in-queue", "designer-reject", "supervisor-reject-approved", "in-progress", "awaiting-response", "qa-supervisor", "qa-supervisor-rejected", "qa-supervisor-partial-approved", "qa-supervisor-full-approved", "submitted", "request-revision", "completed", "on-hold" ]
           }
         }
       },
