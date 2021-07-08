@@ -309,6 +309,7 @@ const update = async (req, res) => {
     var assets = []
     var validOperation = false
     var statusValidation = true
+    var prevStatus = ''
 
     if (req.role == 'customer' || req.role == 'owner') {
         validOperation = updates.every((elem) => allowedFields.includes(elem))
@@ -350,6 +351,8 @@ const update = async (req, res) => {
                 "on-hold": "On Hold"
             }
 
+            prevStatus = dr.status
+
             const comment = new commentModel({
                 designrequest: req.params.id,
                 uid: req.uid,
@@ -371,6 +374,7 @@ const update = async (req, res) => {
     try {
         updates.forEach((elem) => dr[elem] = req.body[elem])
         dr['assets'] = dr['assets'].concat(assets)
+        prevStatus ? dr['prevstatus'] = prevStatus : null
         await dr.save()
         await dr.populate('brand')
             .populate('designer')

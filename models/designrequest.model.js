@@ -22,6 +22,7 @@ const schema = new mongoose.Schema({
     },
     assets: Array,
     stockimages: Array,
+    prevstatus: String,
     status: {
         type: String,
         enum: ["open", "in-queue", "designer-reject", "supervisor-reject-approved",
