@@ -321,9 +321,9 @@ const update = async (req, res) => {
         const customerAllowedStatus = ["on-hold", "request-revision", "completed"]
         const designerAllowedStatus = ["designer-reject", "awaiting-response", "qa-supervisor", "on-hold", "in-queue",
             "in-progress", "submitted"]
-        const supervisorAllowedStatus = ["supervisor-reject-approved", "awaiting-response", "qa-supervisor-rejected",
-            "qa-supervisor-partial-approved", "qa-supervisor-full-approved", "in-queue", "in-progress", "submitted",
-            "on-hold", "completed"]
+        const supervisorAllowedStatus = ["supervisor-reject-approved", "qa-supervisor", "designer-reject", "awaiting-response",
+         "qa-supervisor-rejected", "qa-supervisor-partial-approved", "qa-supervisor-full-approved", "in-queue", "in-progress",
+         "submitted", "on-hold", "completed"]
 
         if (req.role == 'customer' && !customerAllowedStatus.includes(req.body.status)) {
             statusValidation = false
