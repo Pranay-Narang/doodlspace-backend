@@ -318,7 +318,7 @@ const update = async (req, res) => {
     }
 
     if (req.body.status) {
-        const customerAllowedStatus = ["on-hold", "request-revision", "completed"]
+        const customerAllowedStatus = ["on-hold", "request-revision", "completed", "in-queue", "qa-supervisor-partial-approved"]
         const designerAllowedStatus = ["designer-reject", "awaiting-response", "qa-supervisor", "on-hold", "in-queue",
             "in-progress", "submitted"]
         const supervisorAllowedStatus = ["supervisor-reject-approved", "qa-supervisor", "designer-reject", "awaiting-response",
